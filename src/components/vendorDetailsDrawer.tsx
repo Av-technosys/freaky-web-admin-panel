@@ -3,7 +3,6 @@ import {
   TiIconFacebook,
   TiIconInstagram,
   TiIconLinkedin,
-  TiIconMenu2,
   TiIconWebsite,
   TiIconX,
   TiIconYoutube,
