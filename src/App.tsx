@@ -15,14 +15,14 @@ const App = () => {
           <AdminSidebar />
 
           <SidebarInset className="flex flex-1 flex-col">
-            <Header />
+            {/* <Header /> */}
             <div className="px-4 pt-2 md:hidden">
               <SidebarTrigger />
             </div>
-            <main className="flex-1 p-2 ">
+            <main className="flex-1 pl-2">
               <Outlet />
             </main>
-            <Footer />
+            {/* <Footer /> */}
           </SidebarInset>
         </div>
       </SidebarProvider>
