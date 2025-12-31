@@ -3,6 +3,7 @@ import {
   IconBrandInstagram,
   IconBrandLinkedin,
   IconBrandYoutube,
+  IconCaretDown,
   IconCheck,
   IconEye,
   IconMenu2,
@@ -44,4 +45,7 @@ export function TiIconYoutube(props: any) {
 }
 export function TiIconWebsite(props: any) {
   return <IconWorld color="#0284C7" {...props} />;
+}
+export function TiIconCaretDown(props: any) {
+  return <IconCaretDown size={15} {...props} />;
 }
