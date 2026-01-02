@@ -37,6 +37,11 @@ const items = [
     url: "/contact-us",
     icon: Settings,
   },
+  {
+    title: "Event Types",
+    url: "/event-types",
+    icon: Settings,
+  },
 ];
 
 export function AdminSidebar() {
