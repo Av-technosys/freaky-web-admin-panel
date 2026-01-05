@@ -1,4 +1,7 @@
 export const apiConstant = {
+  authentication: {
+    login: "v1/auth/signin",
+  },
   vendor: {
     getAllRequestedVendors: "/v1/admin/requested_vendors",
     getAllVendors: "/v1/admin/vendors",

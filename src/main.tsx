@@ -13,6 +13,8 @@ import VendorRequests from "./components/pages/vendorRequests.tsx";
 
 import EventTypes from "./components/pages/eventTypes.tsx";
 import { Toaster } from "./components/ui/sonner.tsx";
+import Login from "./components/pages/login.tsx";
+import ProtectRoute from "./components/protectRoute.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,34 +24,44 @@ const routes = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/payments",
-        element: <Payments />,
-      },
-      {
-        path: "/contact-us",
-        element: <ContactUs />,
-      },
-      {
-        path: "/vendors",
-        element: <Vendors />,
-      },
-      {
-        path: "/vendor-requests",
-        element: <VendorRequests />,
-      },
-      {
-        path: "/users",
-        element: <Users />,
-      },
-      {
-        path: "/event-types",
-        element: <EventTypes />,
+        element: <ProtectRoute />,
+        children: [
+          {
+            path: "/",
+            element: <Home />,
+          },
+          {
+            path: "/payments",
+            element: <Payments />,
+          },
+          {
+            path: "/contact-us",
+            element: <ContactUs />,
+          },
+          {
+            path: "/vendors",
+            element: <Vendors />,
+          },
+          {
+            path: "/vendor-requests",
+            element: <VendorRequests />,
+          },
+          {
+            path: "/users",
+            element: <Users />,
+          },
+          {
+            path: "/event-types",
+            element: <EventTypes />,
+          },
+        ],
       },
     ],
+  },
+
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 
