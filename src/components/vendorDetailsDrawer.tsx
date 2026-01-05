@@ -19,7 +19,6 @@ import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import { useGetVendorDetails } from "../services/useGetVendors";
 import { useEffect, useState } from "react";
-import { Download } from "lucide-react";
 
 const VendorDetailsDrawer = ({ open, setOpen, vendorId }: any) => {
   const [vendorDetails, setVendorDetails] = useState<any>({});
@@ -34,7 +33,7 @@ const VendorDetailsDrawer = ({ open, setOpen, vendorId }: any) => {
     <>
       <Drawer open={open} onOpenChange={setOpen} direction="right">
         <DrawerContent>
-          <div className=" w-full h-full bg-[#fff6e3] overflow-y-scroll">
+          <div className=" w-full h-full  overflow-y-scroll">
             <DrawerHeader>
               <DrawerTitle>
                 <div className=" flex items-center justify-between  ">
@@ -256,22 +255,12 @@ const VendorDetailsDrawer = ({ open, setOpen, vendorId }: any) => {
                   (document: any, index: number) => {
                     return (
                       <div key={index} className="grid grid-cols-2 my-2">
-                        <div className="col-span-1 break-all font-semibold flex items-center">
+                        <div className="col-span-1 font-semibold flex items-center">
                           {document?.document_type}
                         </div>
                         <div className="col-span-1 text-gray-600 text-end ">
-                          <a
-                            target="_blank"
-                            href={`${import.meta.env.VITE_IMAGE_BASE_URL}/${
-                              document?.document_url
-                            }`}
-                          >
-                            <Button
-                              variant={"outline"}
-                              className=" text-blue-500 border-none"
-                            >
-                              <Download />
-                            </Button>
+                          <a href={document?.document_url} download>
+                            <Button className="bg-blue-500">Download</Button>
                           </a>
                         </div>
                       </div>

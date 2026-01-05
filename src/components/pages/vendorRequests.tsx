@@ -111,23 +111,28 @@ const VendorRequests = () => {
                   <TableCell>
                     <div className="flex gap-2">
                       <Button
-                        variant={"outline"}
                         onClick={() => viewHandler(vendor.vendorId)}
-                        className="border-none rounded-full w-10 h-10 text-blue-500"
+                        className="bg-blue-500 text-white"
                       >
                         <TiIconEye />
                       </Button>
                       <Button
-                        variant={"outline"}
                         onClick={() => approveHandler(vendor.vendorId)}
-                        className="border-none rounded-full w-10 h-10 text-green-500"
+                        className={`${
+                          vendor.status == "approved"
+                            ? "cursor-not-allowed opacity-30"
+                            : "bg-green-500 text-white"
+                        }`}
                       >
                         <TiIconCheck />
                       </Button>
                       <Button
-                        variant={"outline"}
                         onClick={() => rejectHandler(vendor.vendorId)}
-                        className="border-none rounded-full w-10 h-10 text-red-500"
+                        className={`${
+                          vendor.status == "rejected"
+                            ? "cursor-not-allowed opacity-30"
+                            : "bg-red-500 text-white"
+                        }`}
                       >
                         <TiIconTrash />
                       </Button>

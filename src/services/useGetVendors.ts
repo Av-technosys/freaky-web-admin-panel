@@ -14,17 +14,17 @@ export const useGetRequestedVendors = () => {
   });
 };
 
-export const useGetVendors = (page: number, page_size: number) => {
+export const useGetVendors = () => {
   return useQuery({
-    queryKey: ["vendors", page],
-    queryFn: () => getAllVendors(page, page_size),
+    queryKey: ["vendors"],
+    queryFn: () => getAllVendors(),
   });
 };
 
-export const useGetUsers = (page: number, page_size: number) => {
+export const useGetUsers = () => {
   return useQuery({
-    queryKey: ["users", page],
-    queryFn: () => getAllUsers(page, page_size),
+    queryKey: ["users"],
+    queryFn: () => getAllUsers(),
   });
 };
 
