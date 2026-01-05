@@ -1,4 +1,12 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import {
+  Balloon,
+  Calendar,
+  ChevronDown,
+  Home,
+  IndianRupee,
+  MessageCircleQuestionMark,
+  Users,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -9,15 +17,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "./ui/sidebar";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { TiIconCaretDown } from "./icons";
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "./ui/collapsible";
 
 type SidebarItem =
   | {
@@ -42,7 +47,7 @@ const items: SidebarItem[] = [
   {
     title: "Users",
     url: "/users",
-    icon: Inbox,
+    icon: Users,
   },
   {
     title: "Vendors",
@@ -53,74 +58,76 @@ const items: SidebarItem[] = [
     icon: Calendar,
   },
   {
+    title: "Event Types",
+    url: "/event-types",
+    icon: Balloon,
+  },
+  {
     title: "Payments",
     url: "/payments",
-    icon: Search,
+    icon: IndianRupee,
   },
   {
     title: "Contact Us",
     url: "/contact-us",
-    icon: Settings,
-  },
-  {
-    title: "Event Types",
-    url: "/event-types",
-    icon: Settings,
+    icon: MessageCircleQuestionMark,
   },
 ];
 
 export function AdminSidebar() {
+  const location = useLocation();
+
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Admin Panel</SidebarGroupLabel>
+
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  {item.title == "Vendors" ? (
-                    <>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <SidebarMenuButton>
-                            <Calendar />
-                            <div className="w-full flex items-center justify-between">
-                              <div>Vendors</div>
-                              <div>
-                                <TiIconCaretDown />
-                              </div>
-                            </div>
-                          </SidebarMenuButton>
-                        </DropdownMenuTrigger>
-
-                        <DropdownMenuContent className="min-w-[15rem]">
-                          {item?.children?.map((item, index) => {
-                            return (
-                              <>
-                                <SidebarMenuButton key={index} asChild>
-                                  <NavLink to={item.url}>
-                                    <DropdownMenuItem>
-                                      {item.title}
-                                    </DropdownMenuItem>
-                                  </NavLink>
-                                </SidebarMenuButton>
-                                <DropdownMenuSeparator />
-                              </>
-                            );
-                          })}
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                      {/* <SidebarMenuButton asChild>
-                        <NavLink to={item.url}>
+                  {item.children ? (
+                    <Collapsible className="group">
+                      <CollapsibleTrigger asChild>
+                        <SidebarMenuButton>
                           <item.icon />
-                          <span>{item.title}</span>
-                        </NavLink>
-                      </SidebarMenuButton> */}
-                    </>
+                          <span className="flex-1">{item.title}</span>
+                          <ChevronDown className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                        </SidebarMenuButton>
+                      </CollapsibleTrigger>
+
+                      <CollapsibleContent className="pl-8 pt-1 space-y-1">
+                        {item.children.map((child) => (
+                          <SidebarMenuButton
+                            key={child.title}
+                            asChild
+                            size="sm"
+                          >
+                            <NavLink
+                              className={
+                                child.url === location.pathname
+                                  ? "text-orange-600"
+                                  : "text-base"
+                              }
+                              to={child.url}
+                            >
+                              <span>{child.title}</span>
+                            </NavLink>
+                          </SidebarMenuButton>
+                        ))}
+                      </CollapsibleContent>
+                    </Collapsible>
                   ) : (
                     <SidebarMenuButton asChild>
-                      <NavLink to={item?.url}>
+                      <NavLink
+                        className={
+                          item.url === location.pathname
+                            ? "text-orange-600"
+                            : "text-base"
+                        }
+                        to={item.url}
+                      >
                         <item.icon />
                         <span>{item.title}</span>
                       </NavLink>

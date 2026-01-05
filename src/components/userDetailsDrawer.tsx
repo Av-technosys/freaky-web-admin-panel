@@ -107,26 +107,6 @@ const UserDetailsDrawer = ({ open, setOpen, userId }: any) => {
                     {userDetails?.isActive == true ? "True" : "False"}
                   </div>
                 </div>
-              </Card>
-
-              <Card className="my-4 p-2">
-                <h2 className="text-lg text-gray-600 font-bold ">
-                  Other Details :-
-                </h2>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="col-span-1 font-semibold">
-                    Token Facebook{" "}
-                  </div>
-                  <div className="col-span-1 text-gray-600 text-end ">
-                    {userDetails?.tokenFacebook}
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="col-span-1 font-semibold">Token Twitter</div>
-                  <div className="col-span-1 text-gray-600 text-end ">
-                    {userDetails?.tokenTwitter}
-                  </div>
-                </div>
                 <div className="grid grid-cols-2 my-2">
                   <div className="col-span-1 font-semibold">Status </div>
                   <div

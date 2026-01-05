@@ -13,10 +13,10 @@ export const getAllRequestedVendors = async () => {
   }
 };
 
-export const getAllVendors = async () => {
+export const getAllVendors = async (page: number, page_size: number) => {
   try {
     const response = await axiosInstance.get(
-      `${apiConstant.vendor.getAllVendors}`
+      `${apiConstant.vendor.getAllVendors}?page=${page}&page_size=${page_size}`
     );
     return response.data;
   } catch (error) {
@@ -25,9 +25,11 @@ export const getAllVendors = async () => {
   }
 };
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (page: number, page_size: number) => {
   try {
-    const response = await axiosInstance.get(`${apiConstant.user.getAllUsers}`);
+    const response = await axiosInstance.get(
+      `${apiConstant.user.getAllUsers}?page=${page}&page_size=${page_size}`
+    );
     return response.data;
   } catch (error) {
     console.error("Error while sending request:", error);
