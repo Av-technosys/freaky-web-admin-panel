@@ -17,8 +17,18 @@ import {
 } from "./ui/drawer";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
+import { useGetVendorDetails } from "../services/useGetVendors";
+import { useEffect, useState } from "react";
 
-const VendorDetailsDrawer = ({ open, setOpen, vendorDetails }: any) => {
+const VendorDetailsDrawer = ({ open, setOpen, vendorId }: any) => {
+  const [vendorDetails, setVendorDetails] = useState<any>({});
+
+  const { data: vendorData, isPending } = useGetVendorDetails(vendorId);
+
+  useEffect(() => {
+    setVendorDetails(vendorData?.data);
+  }, [vendorData, vendorId]);
+
   return (
     <>
       <Drawer open={open} onOpenChange={setOpen} direction="right">
@@ -36,6 +46,7 @@ const VendorDetailsDrawer = ({ open, setOpen, vendorDetails }: any) => {
                 </div>
               </DrawerTitle>
             </DrawerHeader>
+            {isPending && <div>Loading...</div>}
             <div className="px-4">
               <div className="grid grid-cols-4 gap-5 mb-3">
                 <div className="col-span-1">
@@ -263,19 +274,19 @@ const VendorDetailsDrawer = ({ open, setOpen, vendorDetails }: any) => {
                   Socials Links :-
                 </div>
                 <div className="flex gap-2 ">
-                  <NavLink to={vendorDetails.website_url}>
+                  <NavLink to={vendorDetails?.website_url}>
                     <TiIconWebsite />
                   </NavLink>
-                  <NavLink to={vendorDetails.instagram_url}>
+                  <NavLink to={vendorDetails?.instagram_url}>
                     <TiIconInstagram />
                   </NavLink>
-                  <NavLink to={vendorDetails.facebook_url}>
+                  <NavLink to={vendorDetails?.facebook_url}>
                     <TiIconFacebook />
                   </NavLink>
-                  <NavLink to={vendorDetails.linkedin_url}>
+                  <NavLink to={vendorDetails?.linkedin_url}>
                     <TiIconLinkedin />
                   </NavLink>
-                  <NavLink to={vendorDetails.youtube_url}>
+                  <NavLink to={vendorDetails?.youtube_url}>
                     <TiIconYoutube />
                   </NavLink>
                 </div>
