@@ -10,87 +10,76 @@ import {
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import Logo from ".././assets/freakychimplogo.png";
+import Logo from "../assets/freakychimplogo.png";
 import { useUserLoginMutation } from "../services/useUserLogin";
 
 const EmailPasswordLogin = () => {
   const mutation = useUserLoginMutation();
-  const submitHandler = (event: any) => {
+
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const form = event.currentTarget;
+
     const userData = {
-      username: event.target.email.value,
-      password: event.target.password.value,
+      username: (form.email as HTMLInputElement).value,
+      password: (form.password as HTMLInputElement).value,
     };
 
-    console.log("userData", userData);
     mutation.mutate(userData);
-    event.target.reset();
+    form.reset();
   };
+
   return (
-    <>
-      <div className="mx-auto  w-[390px] h-[450px] lg:w-[430px] lg:h-[500px]   px-6  ">
-        <Card className=" flex flex-col justify-between !border-none shadow w-full h-full">
-          <CardHeader>
-            <CardTitle>
-              <div className="w-full mb-2 flex items-center justify-center">
-                <img className="w-28 " src={Logo} alt="freeky-logo" />
-              </div>
-            </CardTitle>
-            <CardDescription>
-              <p className="text-center text-gray-700">
-                Enter your email below to login to your account
-              </p>
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <Card className="w-full max-w-[420px] border-none shadow-lg rounded-2xl">
+        {/* Header */}
+        <CardHeader className="space-y-3 pb-6">
+          <CardTitle className="flex justify-center">
+            <img src={Logo} alt="freaky-logo" className="w-28" />
+          </CardTitle>
+
+          <div className="text-center space-y-1">
+            <h1 className="text-xl font-bold">Sign In</h1>
+            <CardDescription className="text-xs text-muted-foreground">
+              Enter your email below to login to your account
             </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={(event) => submitHandler(event)}>
-              <div className="flex flex-col gap-3 lg:gap-6">
-                <div className="w-full text-center font-bold">Sign In</div>
-                <div className="flex flex-col items-start gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input name="email" id="email" type="text" required />
-                </div>
-                <div className="flex flex-col items-start gap-2">
-                  <Label htmlFor="password">Your Password</Label>
-                  <Input
-                    name="password"
-                    id="password"
-                    type="password"
-                    required
-                  />
-                </div>
-                <div>
-                  <Button
-                    type="submit"
-                    className="w-full"
-                    disabled={mutation.isPending}
-                  >
-                    {mutation.isPending ? "Logging in..." : "Log in"}
-                  </Button>
-                </div>
-              </div>
-            </form>
-          </CardContent>
-          <CardFooter className="flex-col gap-2">
-            <p className="text-center hidden lg:block text-gray-700">
-              {" "}
-              By continuing, you agree to the <br /> Terms of use and Privacy
-              Policy.
-            </p>
-            <div className="w-full mt-2 gap-3 flex items-center justify-between text-[14px]">
-              <NavLink to="/sign-up">
-                <u>Sign Up</u>
-              </NavLink>
-              <NavLink to="/forget-password">
-                <div>
-                  <u>Forget Your Password</u>
-                </div>
-              </NavLink>
+          </div>
+        </CardHeader>
+
+        {/* Form */}
+        <CardContent className="px-6">
+          <form onSubmit={submitHandler} className="space-y-5">
+            <div className="space-y-1">
+              <Label htmlFor="email">Email</Label>
+              <Input id="email" name="email" type="email" required />
             </div>
-          </CardFooter>
-        </Card>
-      </div>
-    </>
+
+            <div className="space-y-1">
+              <Label htmlFor="password">Password</Label>
+              <Input id="password" name="password" type="password" required />
+            </div>
+
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full rounded-full bg-[#ff5722] font-semibold hover:bg-[#ff845e]"
+              disabled={mutation.isPending}
+            >
+              {mutation.isPending ? "Signing in..." : "Sign in"}
+            </Button>
+          </form>
+        </CardContent>
+
+        {/* Footer */}
+        <CardFooter className="flex flex-col gap-3 pt-4 pb-6">
+          <p className="text-center text-[11px] text-muted-foreground leading-relaxed">
+            By continuing, you agree to the Terms of Use and Privacy Policy.
+          </p>
+
+
+        </CardFooter>
+      </Card>
+    </div>
   );
 };
 
