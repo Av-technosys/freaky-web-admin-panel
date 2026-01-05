@@ -10,8 +10,30 @@ import {
   SidebarMenuItem,
 } from "./ui/sidebar";
 import { NavLink } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { TiIconCaretDown } from "./icons";
 
-const items = [
+type SidebarItem =
+  | {
+      title: string;
+      url: string | any;
+      icon: any;
+      children?: never;
+    }
+  | {
+      title: string;
+      icon: any;
+      children: { title: string; url: string }[];
+      url?: never;
+    };
+
+const items: SidebarItem[] = [
   {
     title: "Home",
     url: "/",
@@ -24,7 +46,10 @@ const items = [
   },
   {
     title: "Vendors",
-    url: "/vendors",
+    children: [
+      { title: "Vendors", url: "/vendors" },
+      { title: "Vendor Requests", url: "/vendor-requests" },
+    ],
     icon: Calendar,
   },
   {
@@ -54,12 +79,53 @@ export function AdminSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink to={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </NavLink>
-                  </SidebarMenuButton>
+                  {item.title == "Vendors" ? (
+                    <>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <SidebarMenuButton>
+                            <Calendar />
+                            <div className="w-full flex items-center justify-between">
+                              <div>Vendors</div>
+                              <div>
+                                <TiIconCaretDown />
+                              </div>
+                            </div>
+                          </SidebarMenuButton>
+                        </DropdownMenuTrigger>
+
+                        <DropdownMenuContent className="min-w-[15rem]">
+                          {item?.children?.map((item, index) => {
+                            return (
+                              <>
+                                <SidebarMenuButton key={index} asChild>
+                                  <NavLink to={item.url}>
+                                    <DropdownMenuItem>
+                                      {item.title}
+                                    </DropdownMenuItem>
+                                  </NavLink>
+                                </SidebarMenuButton>
+                                <DropdownMenuSeparator />
+                              </>
+                            );
+                          })}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                      {/* <SidebarMenuButton asChild>
+                        <NavLink to={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </NavLink>
+                      </SidebarMenuButton> */}
+                    </>
+                  ) : (
+                    <SidebarMenuButton asChild>
+                      <NavLink to={item?.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </NavLink>
+                    </SidebarMenuButton>
+                  )}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>

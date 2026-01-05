@@ -9,6 +9,7 @@ import ContactUs from "./components/pages/contactUs.tsx";
 import Vendors from "./components/pages/vendors.tsx";
 import Users from "./components/pages/users.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import VendorRequests from "./components/pages/vendorRequests.tsx";
 
 import EventTypes from "./components/pages/eventTypes.tsx";
 import { Toaster } from "./components/ui/sonner.tsx";
@@ -35,6 +36,10 @@ const routes = createBrowserRouter([
       {
         path: "/vendors",
         element: <Vendors />,
+      },
+      {
+        path: "/vendor-requests",
+        element: <VendorRequests />,
       },
       {
         path: "/users",

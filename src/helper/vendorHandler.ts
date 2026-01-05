@@ -1,10 +1,56 @@
 import { axiosInstance } from "./api";
 import { apiConstant } from "./apiConstant";
 
+export const getAllRequestedVendors = async () => {
+  try {
+    const response = await axiosInstance.get(
+      `${apiConstant.vendor.getAllRequestedVendors}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error while sending request:", error);
+    throw error;
+  }
+};
+
 export const getAllVendors = async () => {
   try {
     const response = await axiosInstance.get(
       `${apiConstant.vendor.getAllVendors}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error while sending request:", error);
+    throw error;
+  }
+};
+
+export const getAllUsers = async () => {
+  try {
+    const response = await axiosInstance.get(`${apiConstant.user.getAllUsers}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error while sending request:", error);
+    throw error;
+  }
+};
+
+export const getVendorInfo = async (vendorId: any) => {
+  try {
+    const response = await axiosInstance.get(
+      `${apiConstant.vendor.getVendorInfo}/${vendorId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error while sending request:", error);
+    throw error;
+  }
+};
+
+export const getUserInfo = async (userId: any) => {
+  try {
+    const response = await axiosInstance.get(
+      `${apiConstant.user.getUserInfo}/${userId}`
     );
     return response.data;
   } catch (error) {
