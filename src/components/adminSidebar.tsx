@@ -17,12 +17,15 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "./ui/sidebar";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
+import { Button } from "./ui/button";
+import { TiIconLogout } from "./icons";
+import { toast } from "sonner";
 
 type SidebarItem =
   | {
@@ -76,9 +79,16 @@ const items: SidebarItem[] = [
 
 export function AdminSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    localStorage.removeItem("access_token");
+    toast.success("Logout successfully...");
+    navigate("/login");
+  };
 
   return (
-    <Sidebar>
+    <Sidebar className="border-r border-gray-200">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Admin Panel</SidebarGroupLabel>
@@ -139,6 +149,15 @@ export function AdminSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <div className="w-full px-2">
+        <Button
+          onClick={logoutHandler}
+          className="w-full mb-1"
+          variant={"destructive"}
+        >
+          <TiIconLogout /> Logout
+        </Button>
+      </div>
     </Sidebar>
   );
 }

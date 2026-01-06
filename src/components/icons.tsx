@@ -6,6 +6,7 @@ import {
   IconCaretDown,
   IconCheck,
   IconEye,
+  IconLogout,
   IconMenu2,
   IconTrash,
   IconUsers,
@@ -48,4 +49,7 @@ export function TiIconWebsite(props: any) {
 }
 export function TiIconCaretDown(props: any) {
   return <IconCaretDown size={15} {...props} />;
+}
+export function TiIconLogout(props: any) {
+  return <IconLogout {...props} />;
 }
