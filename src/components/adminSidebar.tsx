@@ -5,6 +5,7 @@ import {
   Home,
   IndianRupee,
   MessageCircleQuestionMark,
+  Star,
   Users,
 } from "lucide-react";
 import {
@@ -64,6 +65,11 @@ const items: SidebarItem[] = [
     title: "Event Types",
     url: "/event-types",
     icon: Balloon,
+  },
+  {
+    title: "Reviews",
+    url: "/reviews",
+    icon: Star,
   },
   {
     title: "Payments",

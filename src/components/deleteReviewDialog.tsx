@@ -1,5 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { useDeleteEventType } from "../services/useUpdateOrCreateEventType";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,18 +8,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "./ui/alert-dialog";
+import { useDeleteUserReview } from "../services/useGetAndDeleteUserReviews";
 
-export function DeleteEventTypeDialog({ open, setOpen, eventTypeId }: any) {
-  const deleteEventTypeMutation = useDeleteEventType();
-  const queryClient = useQueryClient();
+export function DeleteReviewDialog({ open, setOpen, reviewId }: any) {
+  const deleteUserReviewMutation = useDeleteUserReview();
 
   const deleteHandler = () => {
-    deleteEventTypeMutation.mutate(eventTypeId, {
+    deleteUserReviewMutation.mutate(reviewId, {
       onSuccess: () => {
         setOpen(false);
-        queryClient.invalidateQueries({
-          queryKey: ["event_types"],
-        });
       },
     });
   };

@@ -15,6 +15,7 @@ import EventTypes from "./components/pages/eventTypes.tsx";
 import { Toaster } from "./components/ui/sonner.tsx";
 import Login from "./components/pages/login.tsx";
 import ProtectRoute from "./components/protectRoute.tsx";
+import Reviews from "./components/pages/reviews.tsx";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +54,10 @@ const routes = createBrowserRouter([
           {
             path: "/event-types",
             element: <EventTypes />,
+          },
+          {
+            path: "/reviews",
+            element: <Reviews />,
           },
         ],
       },

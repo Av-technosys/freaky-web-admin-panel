@@ -21,4 +21,9 @@ export const apiConstant = {
   uploadImage: {
     getS3Url: "/v1/upload/get_S3_url",
   },
+  reviews: {
+    getAllUserReviews: "/v1/admin/reviews",
+    getReviewById: "/v1/vendor/review",
+    deleteReviewById: "/v1/admin/review",
+  },
 };
