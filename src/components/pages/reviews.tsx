@@ -16,6 +16,7 @@ import { DeleteReviewDialog } from "../deleteReviewDialog";
 const Reviews = () => {
   const {
     data: reviews,
+    isPending,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -72,6 +73,7 @@ const Reviews = () => {
         onScroll={handleScroll}
         className="w-full h-[95vh] overflow-y-auto mt-3  grid grid-cols-3 gap-2"
       >
+        {isPending && <div>Loading...</div>}
         {reviews?.pages?.map((page: any) => {
           return page?.data?.map((review: any, index: number) => {
             return (
