@@ -24,7 +24,7 @@ const UserDetailsDrawer = ({ open, setOpen, userId }: any) => {
     <>
       <Drawer open={open} onOpenChange={setOpen} direction="right">
         <DrawerContent>
-          <div className=" w-full h-full  overflow-y-scroll">
+          <div className=" w-full h-full bg-[#fff6e3] overflow-y-scroll">
             <DrawerHeader>
               <DrawerTitle>
                 <div className=" flex items-center justify-between  ">
