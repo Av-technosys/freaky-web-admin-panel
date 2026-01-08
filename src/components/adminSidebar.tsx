@@ -2,7 +2,9 @@ import {
   Balloon,
   Calendar,
   ChevronDown,
+  CupSoda,
   Home,
+  Image,
   IndianRupee,
   MessageCircleQuestionMark,
   Star,
@@ -67,9 +69,19 @@ const items: SidebarItem[] = [
     icon: Balloon,
   },
   {
+    title: "Product Types",
+    url: "/product-types",
+    icon: CupSoda,
+  },
+  {
     title: "Reviews",
     url: "/reviews",
     icon: Star,
+  },
+  {
+    title: "Featured Banner",
+    url: "/featured_banner",
+    icon: Image,
   },
   {
     title: "Payments",

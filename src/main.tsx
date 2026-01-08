@@ -16,6 +16,8 @@ import { Toaster } from "./components/ui/sonner.tsx";
 import Login from "./components/pages/login.tsx";
 import ProtectRoute from "./components/protectRoute.tsx";
 import Reviews from "./components/pages/reviews.tsx";
+import ProductTypes from "./components/pages/productTypes.tsx";
+import FeaturedBanner from "./components/pages/featuredBanner.tsx";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +56,14 @@ const routes = createBrowserRouter([
           {
             path: "/event-types",
             element: <EventTypes />,
+          },
+          {
+            path: "/featured_banner",
+            element: <FeaturedBanner />,
+          },
+          {
+            path: "/product-types",
+            element: <ProductTypes />,
           },
           {
             path: "/reviews",
