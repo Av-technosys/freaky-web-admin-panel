@@ -26,4 +26,14 @@ export const apiConstant = {
     getReviewById: "/v1/vendor/review",
     deleteReviewById: "/v1/admin/review",
   },
+  product: {
+    getAllProductTypes: "/v1/admin/product_types",
+    createProductType: "/v1/admin/product_type",
+    updateProductType: "/v1/admin/product_type",
+    deleteProductType: "/v1/admin/product_type",
+  },
+  featuredBanner: {
+    getAllFeaturedBanners: "/v1/admin/banner",
+    updateFeaturedBanner: "/v1/admin/banner",
+  },
 };
