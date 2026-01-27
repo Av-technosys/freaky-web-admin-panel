@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "../ui/table";
 
-import { TiIconEye } from "../icons";
+import { TiIconEye, TiIconSearch } from "../icons";
 import VendorDetailsDrawer from "../vendorDetailsDrawer";
 import { useGetVendors } from "../../services/useGetVendors";
 import {
@@ -22,6 +22,25 @@ import {
   PaginationPrevious,
 } from "../ui/pagination";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../ui/input-group";
+
+export function useDebounce<T>(value: T, delay = 600): T {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+
+  return debouncedValue;
+}
 
 const Vendors = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -32,7 +51,15 @@ const Vendors = () => {
   const [searchParams] = useSearchParams();
   const page = Number(searchParams.get("page")) || 1;
 
-  const { data: vendors, isPending } = useGetVendors(page, pageSize);
+  const [searchText, setSearchText] = useState("");
+
+  const debouncedSearch = useDebounce(searchText, 800);
+
+  const { data: vendors, isPending } = useGetVendors(
+    page,
+    pageSize,
+    debouncedSearch,
+  );
 
   const totalPages = vendors?.pagination?.total_pages;
 
@@ -40,6 +67,10 @@ const Vendors = () => {
     setOpenDrawer(true);
     setVendorId(vendorId);
   };
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchText(e.target.value);
+  }
 
   return (
     <>
@@ -50,6 +81,21 @@ const Vendors = () => {
           vendorId={vendorId}
         />
       }
+      <div className="max-w-xs ml-auto my-2 mr-2">
+        <InputGroup className="flex items-center  bg-white rounded-full   py-2 shadow-none">
+          <InputGroupAddon>
+            <TiIconSearch className="text-gray-500" />
+          </InputGroupAddon>
+
+          <InputGroupInput
+            onChange={handleInputChange}
+            value={searchText}
+            type="text"
+            placeholder="Search By Business Name"
+            className="bg-transparent  focus:outline-none w-32 focus:w-56 transition-all duration-200"
+          />
+        </InputGroup>
+      </div>
       <div className=" space-y-3">
         <div className="max-w-[400px] bg-white overflow-x-scroll lg:overflow-hidden md:max-w-full p-3  border">
           <Table>
@@ -65,6 +111,17 @@ const Vendors = () => {
 
             <TableBody>
               {isPending && <div>Loading...</div>}
+
+              {!isPending && vendors?.data?.length === 0 && (
+                <TableRow>
+                  <TableCell
+                    colSpan={6}
+                    className="text-center text-[#89868D] py-6"
+                  >
+                    No vendor found..
+                  </TableCell>
+                </TableRow>
+              )}
 
               {vendors?.data?.map((vendor: any, index: number) => {
                 const rowNumber = (page - 1) * pageSize + (index + 1);
@@ -95,8 +152,8 @@ const Vendors = () => {
                         vendor.status == "approved"
                           ? "text-green-500"
                           : vendor.status == "rejected"
-                          ? "text-red-500"
-                          : "text-[#89868D]"
+                            ? "text-red-500"
+                            : "text-[#89868D]"
                       }`}
                     >
                       {vendor.status}
@@ -106,7 +163,7 @@ const Vendors = () => {
                         <Button
                           variant={"outline"}
                           onClick={() => viewHandler(vendor.vendorId)}
-                          className="border-none text-blue-500"
+                          className="border-none shadow-none cursor-pointer text-blue-500"
                         >
                           <TiIconEye />
                         </Button>
@@ -119,7 +176,6 @@ const Vendors = () => {
           </Table>
         </div>
       </div>
-
       <div className="my-5">
         <Pagination>
           <PaginationContent>

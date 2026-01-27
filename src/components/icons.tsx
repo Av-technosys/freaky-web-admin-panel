@@ -8,6 +8,7 @@ import {
   IconEye,
   IconLogout,
   IconMenu2,
+  IconSearch,
   IconStarFilled,
   IconTrash,
   IconUsers,
@@ -56,4 +57,7 @@ export function TiIconLogout(props: any) {
 }
 export function TiIconStarFilled(props: any) {
   return <IconStarFilled {...props} />;
+}
+export function TiIconSearch(props: any) {
+  return <IconSearch {...props} />;
 }

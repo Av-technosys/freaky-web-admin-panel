@@ -20,7 +20,7 @@ const EmailPasswordLogin = () => {
     const form = event.currentTarget;
 
     const userData = {
-      username: (form.email as HTMLInputElement).value,
+      email: (form.email as HTMLInputElement).value,
       password: (form.password as HTMLInputElement).value,
     };
 
@@ -74,8 +74,6 @@ const EmailPasswordLogin = () => {
           <p className="text-center text-[11px] text-muted-foreground leading-relaxed">
             By continuing, you agree to the Terms of Use and Privacy Policy.
           </p>
-
-
         </CardFooter>
       </Card>
     </div>
