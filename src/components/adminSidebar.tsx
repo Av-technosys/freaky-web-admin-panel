@@ -60,6 +60,7 @@ const items: SidebarItem[] = [
     children: [
       { title: "Vendors", url: "/vendors" },
       { title: "Vendor Requests", url: "/vendor-requests" },
+      { title: "Vendor Rejected", url: "/vendor-rejected" },
     ],
     icon: Calendar,
   },

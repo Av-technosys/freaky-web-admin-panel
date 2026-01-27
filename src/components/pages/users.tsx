@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import {
   Table,
@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "../ui/table";
 import { useGetUsers } from "../../services/useGetVendors";
-import { TiIconEye } from "../icons";
+import { TiIconEye, TiIconSearch } from "../icons";
 import UserDetailsDrawer from "../userDetailsDrawer";
 import {
   Pagination,
@@ -20,6 +20,25 @@ import {
   PaginationPrevious,
 } from "../ui/pagination";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../ui/input-group";
+
+export function useDebounce<T>(value: T, delay = 600): T {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+
+  return debouncedValue;
+}
 
 const Users = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -30,7 +49,15 @@ const Users = () => {
   const [searchParams] = useSearchParams();
   const page = Number(searchParams.get("page")) || 1;
 
-  const { data: users, isPending } = useGetUsers(page, pageSize);
+  const [searchText, setSearchText] = useState("");
+
+  const debouncedSearch = useDebounce(searchText, 800);
+
+  const { data: users, isPending } = useGetUsers(
+    page,
+    pageSize,
+    debouncedSearch,
+  );
 
   const totalPages = users?.pagination?.total_pages;
 
@@ -38,6 +65,10 @@ const Users = () => {
     setOpenDrawer(true);
     setUserId(userId);
   };
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchText(e.target.value);
+  }
   return (
     <>
       {
@@ -47,6 +78,21 @@ const Users = () => {
           userId={userId}
         />
       }
+      <div className="max-w-xs ml-auto my-2 mr-2">
+        <InputGroup className="flex items-center  bg-white rounded-full   py-2 shadow-none">
+          <InputGroupAddon>
+            <TiIconSearch className="text-gray-500" />
+          </InputGroupAddon>
+
+          <InputGroupInput
+            onChange={handleInputChange}
+            value={searchText}
+            type="text"
+            placeholder="Search By First Name"
+            className="bg-transparent  focus:outline-none w-32 focus:w-56 transition-all duration-200"
+          />
+        </InputGroup>
+      </div>
 
       <div className=" space-y-3">
         <div className="max-w-[400px] bg-white overflow-x-scroll lg:overflow-hidden md:max-w-full p-3  border">
@@ -64,6 +110,16 @@ const Users = () => {
 
             <TableBody>
               {isPending && <div>Loading...</div>}
+              {!isPending && users?.data?.length === 0 && (
+                <TableRow>
+                  <TableCell
+                    colSpan={6}
+                    className="text-center text-[#89868D] py-6"
+                  >
+                    No user found..
+                  </TableCell>
+                </TableRow>
+              )}
               {users?.data?.map((user: any, index: number) => {
                 const rowNumber = (page - 1) * pageSize + (index + 1);
 
@@ -91,8 +147,8 @@ const Users = () => {
                         user.isActive == true
                           ? "text-green-500"
                           : user.isActive == false
-                          ? "text-red-500"
-                          : "text-[#89868D]"
+                            ? "text-red-500"
+                            : "text-[#89868D]"
                       }`}
                     >
                       {user.isActive == true ? "True" : "False"}
@@ -102,7 +158,7 @@ const Users = () => {
                         <Button
                           variant={"outline"}
                           onClick={() => viewHandler(user.userId)}
-                          className="border-none text-blue-500"
+                          className="border-none shadow-none cursor-pointer text-blue-500"
                         >
                           <TiIconEye />
                         </Button>
@@ -115,7 +171,6 @@ const Users = () => {
           </Table>
         </div>
       </div>
-
       <div className="my-5">
         <Pagination>
           <PaginationContent>

@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { useGetRequestedVendors } from "../../services/useGetVendors";
-import { useUpdateVendorPermission } from "../../services/useUpdateVendorPermission";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -11,10 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { useQueryClient } from "@tanstack/react-query";
-import { TiIconCheck, TiIconEye, TiIconSearch, TiIconTrash } from "../icons";
+
+import { TiIconEye, TiIconSearch } from "../icons";
 import VendorDetailsDrawer from "../vendorDetailsDrawer";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useGetRejectedVendors } from "../../services/useGetVendors";
 import {
   Pagination,
   PaginationContent,
@@ -23,6 +21,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "../ui/pagination";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   InputGroup,
   InputGroupAddon,
@@ -43,7 +42,7 @@ export function useDebounce<T>(value: T, delay = 600): T {
   return debouncedValue;
 }
 
-const VendorRequests = () => {
+const VendorRejected = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [vendorId, setVendorId] = useState<number | any>();
 
@@ -56,42 +55,13 @@ const VendorRequests = () => {
 
   const debouncedSearch = useDebounce(searchText, 800);
 
-  const { data: vendors, isPending } = useGetRequestedVendors(
+  const { data: vendors, isPending } = useGetRejectedVendors(
     page,
     pageSize,
     debouncedSearch,
   );
 
   const totalPages = vendors?.pagination?.total_pages;
-
-  const vendorPermissionMutation = useUpdateVendorPermission();
-  const queryClient = useQueryClient();
-
-  const approveHandler = (vendorId: any) => {
-    vendorPermissionMutation.mutate(
-      { vendorId, status: "approved" },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: ["requested_vendors"],
-          });
-        },
-      },
-    );
-  };
-
-  const rejectHandler = (vendorId: any) => {
-    vendorPermissionMutation.mutate(
-      { vendorId, status: "rejected" },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: ["requested_vendors"],
-          });
-        },
-      },
-    );
-  };
 
   const viewHandler = (vendorId: any) => {
     setOpenDrawer(true);
@@ -141,73 +111,67 @@ const VendorRequests = () => {
 
             <TableBody>
               {isPending && <div>Loading...</div>}
+
               {!isPending && vendors?.data?.length === 0 && (
                 <TableRow>
                   <TableCell
                     colSpan={6}
                     className="text-center text-[#89868D] py-6"
                   >
-                    No vendor request found..
+                    No rejected vendor found..
                   </TableCell>
                 </TableRow>
               )}
-              {vendors?.data?.map((vendor: any, index: number) => (
-                <TableRow key={vendor.vendorId} className=" ">
-                  <TableCell className="text-[#89868D]">{index + 1}</TableCell>
-                  <TableCell className="font-medium flex items-center  gap-3 text-[#89868D]">
-                    <Avatar>
-                      <AvatarFallback className="text-xs   p-2   rounded-full bg-slate-200">
-                        {vendor.businessName?.charAt(0)}
-                      </AvatarFallback>
-                    </Avatar>
-                    {vendor.businessName}
-                  </TableCell>
-                  <TableCell className="text-[#89868D]">
-                    {vendor?.createdAt &&
-                      new Date(vendor.createdAt).toLocaleDateString("en-IN", {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                  </TableCell>
-                  <TableCell
-                    className={` ${
-                      vendor.status == "approved"
-                        ? "text-green-500"
-                        : vendor.status == "rejected"
-                          ? "text-red-500"
-                          : "text-[#89868D]"
-                    }`}
-                  >
-                    {vendor.status}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex gap-2">
-                      <Button
-                        variant={"outline"}
-                        onClick={() => viewHandler(vendor.vendorId)}
-                        className="border-none shadow-none cursor-pointer rounded-full w-10 h-10 text-blue-500"
-                      >
-                        <TiIconEye />
-                      </Button>
-                      <Button
-                        variant={"outline"}
-                        onClick={() => approveHandler(vendor.vendorId)}
-                        className="border-none shadow-none cursor-pointer rounded-full w-10 h-10 text-green-500"
-                      >
-                        <TiIconCheck />
-                      </Button>
-                      <Button
-                        variant={"outline"}
-                        onClick={() => rejectHandler(vendor.vendorId)}
-                        className="border-none shadow-none cursor-pointer rounded-full w-10 h-10 text-red-500"
-                      >
-                        <TiIconTrash />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
+
+              {vendors?.data?.map((vendor: any, index: number) => {
+                const rowNumber = (page - 1) * pageSize + (index + 1);
+
+                return (
+                  <TableRow key={vendor.vendorId} className=" ">
+                    <TableCell className="text-[#89868D]">
+                      {rowNumber}
+                    </TableCell>
+                    <TableCell className="font-medium flex items-center  gap-3 text-[#89868D]">
+                      <Avatar>
+                        <AvatarFallback className="text-xs   p-2   rounded-full bg-slate-200">
+                          {vendor.businessName?.charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
+                      {vendor.businessName}
+                    </TableCell>
+                    <TableCell className="text-[#89868D]">
+                      {vendor?.createdAt &&
+                        new Date(vendor.createdAt).toLocaleDateString("en-IN", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                    </TableCell>
+                    <TableCell
+                      className={` ${
+                        vendor.status == "approved"
+                          ? "text-green-500"
+                          : vendor.status == "rejected"
+                            ? "text-red-500"
+                            : "text-[#89868D]"
+                      }`}
+                    >
+                      {vendor.status}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex gap-2">
+                        <Button
+                          variant={"outline"}
+                          onClick={() => viewHandler(vendor.vendorId)}
+                          className="border-none shadow-none cursor-pointer text-blue-500"
+                        >
+                          <TiIconEye />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>
@@ -256,4 +220,4 @@ const VendorRequests = () => {
   );
 };
 
-export default VendorRequests;
+export default VendorRejected;

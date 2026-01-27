@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import {
+  getAllRejectedVendors,
   getAllRequestedVendors,
   getAllUsers,
   getAllVendors,
@@ -7,24 +8,47 @@ import {
   getVendorInfo,
 } from "../helper/vendorHandler";
 
-export const useGetRequestedVendors = () => {
+export const useGetRequestedVendors = (
+  page: number,
+  page_size: number,
+  debouncedSearch?: string,
+) => {
   return useQuery({
-    queryKey: ["requested_vendors"],
-    queryFn: () => getAllRequestedVendors(),
+    queryKey: ["requested_vendors", page, debouncedSearch],
+    queryFn: () => getAllRequestedVendors(page, page_size, debouncedSearch),
   });
 };
 
-export const useGetVendors = (page: number, page_size: number) => {
+export const useGetRejectedVendors = (
+  page: number,
+  page_size: number,
+  debouncedSearch?: string,
+) => {
   return useQuery({
-    queryKey: ["vendors", page],
-    queryFn: () => getAllVendors(page, page_size),
+    queryKey: ["rejected_vendors", page, debouncedSearch],
+    queryFn: () => getAllRejectedVendors(page, page_size, debouncedSearch),
   });
 };
 
-export const useGetUsers = (page: number, page_size: number) => {
+export const useGetVendors = (
+  page: number,
+  page_size: number,
+  debouncedSearch?: string,
+) => {
   return useQuery({
-    queryKey: ["users", page],
-    queryFn: () => getAllUsers(page, page_size),
+    queryKey: ["vendors", page, debouncedSearch],
+    queryFn: () => getAllVendors(page, page_size, debouncedSearch),
+  });
+};
+
+export const useGetUsers = (
+  page: number,
+  page_size: number,
+  debouncedSearch?: string,
+) => {
+  return useQuery({
+    queryKey: ["users", page, debouncedSearch],
+    queryFn: () => getAllUsers(page, page_size, debouncedSearch),
   });
 };
 

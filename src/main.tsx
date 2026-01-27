@@ -18,6 +18,7 @@ import ProtectRoute from "./components/protectRoute.tsx";
 import Reviews from "./components/pages/reviews.tsx";
 import ProductTypes from "./components/pages/productTypes.tsx";
 import FeaturedBanner from "./components/pages/featuredBanner.tsx";
+import VendorRejected from "./components/pages/vendorRejected.tsx";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,10 @@ const routes = createBrowserRouter([
           {
             path: "/vendor-requests",
             element: <VendorRequests />,
+          },
+          {
+            path: "/vendor-rejected",
+            element: <VendorRejected />,
           },
           {
             path: "/users",
@@ -86,5 +91,5 @@ createRoot(document.getElementById("root")!).render(
       <RouterProvider router={routes} />
       <Toaster position="top-center" />
     </QueryClientProvider>
-  </StrictMode>
+  </StrictMode>,
 );
