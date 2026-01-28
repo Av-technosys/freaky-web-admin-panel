@@ -29,6 +29,7 @@ import {
 import { Button } from "./ui/button";
 import { TiIconLogout } from "./icons";
 import { toast } from "sonner";
+import { tokenStorage } from "../helper/refreshToken";
 
 type SidebarItem =
   | {
@@ -101,7 +102,7 @@ export function AdminSidebar() {
   const navigate = useNavigate();
 
   const logoutHandler = () => {
-    localStorage.removeItem("access_token");
+    tokenStorage.clear();
     toast.success("Logout successfully...");
     navigate("/login");
   };

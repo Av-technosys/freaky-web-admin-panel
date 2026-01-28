@@ -1,4 +1,4 @@
-import { axiosInstance } from "./api";
+import axiosInstance from "./api";
 import { apiConstant } from "./apiConstant";
 
 export const getAllRequestedVendors = async (

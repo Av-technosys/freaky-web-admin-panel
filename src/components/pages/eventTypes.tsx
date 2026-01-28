@@ -46,7 +46,7 @@ const EventTypes = () => {
           />
         </>
       }
-      <div className="flex items-center justify-end px-2 mt-2 mb-5">
+      <div className="flex items-center justify-end px-2 my-2 ">
         <Button
           onClick={() => setOpenAddEvntTypeDialog(true)}
           size="sm"
@@ -58,6 +58,13 @@ const EventTypes = () => {
       </div>
       <div className="grid grid-cols-3 gap-3 pr-2">
         {isPending && <div>Loading...</div>}
+        {!isPending && eventTypes?.data?.length === 0 && (
+          <div>
+            <div className="text-center text-[#89868D] py-6">
+              No event types found..
+            </div>
+          </div>
+        )}
         {eventTypes?.data?.map((eventType: any, index: number) => {
           return (
             <>
@@ -91,7 +98,7 @@ const EventTypes = () => {
                               day: "2-digit",
                               month: "short",
                               year: "numeric",
-                            }
+                            },
                           )}
                       </span>
                     </div>

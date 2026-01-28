@@ -1,5 +1,5 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { useDeleteEventType } from "../services/useUpdateOrCreateEventType";
+// import { useQueryClient } from "@tanstack/react-query";
+// import { useDeleteEventType } from "../services/useUpdateOrCreateEventType";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,18 +12,23 @@ import {
 } from "./ui/alert-dialog";
 
 export function DeleteEventTypeDialog({ open, setOpen, eventTypeId }: any) {
-  const deleteEventTypeMutation = useDeleteEventType();
-  const queryClient = useQueryClient();
+  // const deleteEventTypeMutation = useDeleteEventType();
+  // const queryClient = useQueryClient();
+  console.log(eventTypeId);
 
   const deleteHandler = () => {
-    deleteEventTypeMutation.mutate(eventTypeId, {
-      onSuccess: () => {
-        setOpen(false);
-        queryClient.invalidateQueries({
-          queryKey: ["event_types"],
-        });
-      },
-    });
+    // deleteEventTypeMutation.mutate(eventTypeId, {
+    //   onSuccess: () => {
+    //     setOpen(false);
+    //     queryClient.invalidateQueries({
+    //       queryKey: ["event_types"],
+    //     });
+    //   },
+    // });
+
+    alert(
+      "this part is commented because if we delete event types then the normal event associated with event type id shows error..",
+    );
   };
 
   return (

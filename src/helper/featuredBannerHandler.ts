@@ -4,7 +4,20 @@ import { apiConstant } from "./apiConstant";
 export const getAllFeaturedBanners = async () => {
   try {
     const response = await axiosInstance.get(
-      `${apiConstant.featuredBanner.getAllFeaturedBanners}`
+      `${apiConstant.featuredBanner.getAllFeaturedBanners}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error while sending request:", error);
+    throw error;
+  }
+};
+
+export const createFeaturedBannerHandler = async (bannerDetails: any) => {
+  try {
+    const response = await axiosInstance.post(
+      `${apiConstant.featuredBanner.createFeaturedBanner}`,
+      bannerDetails,
     );
     return response.data;
   } catch (error) {
@@ -24,7 +37,7 @@ export const updateBannerPriorityHandler = async ({
       {
         currentBannerPriority: currentBannerPriority,
         nextBannerPriority: nextBannerPriority,
-      }
+      },
     );
     return response.data;
   } catch (error) {

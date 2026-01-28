@@ -46,7 +46,7 @@ const ProductTypes = () => {
           />
         </>
       }
-      <div className="flex items-center justify-end px-2 mt-2 mb-5">
+      <div className="flex items-center justify-end px-2 my-2 ">
         <Button
           onClick={() => setOpenAddProductTypeDialog(true)}
           size="sm"
@@ -58,6 +58,13 @@ const ProductTypes = () => {
       </div>
       <div className="grid grid-cols-3 gap-3 pr-2 mb-2">
         {isPending && <div>Loading...</div>}
+        {!isPending && productTypes?.data?.length === 0 && (
+          <div>
+            <div className="text-center text-[#89868D] py-6">
+              No product types found..
+            </div>
+          </div>
+        )}
         {productTypes?.data?.map((productType: any, index: number) => {
           return (
             <>
@@ -91,7 +98,7 @@ const ProductTypes = () => {
                               day: "2-digit",
                               month: "short",
                               year: "numeric",
-                            }
+                            },
                           )}
                       </span>
                       <div className="text-[11px] text-gray-500">
@@ -99,14 +106,14 @@ const ProductTypes = () => {
                         <span
                           className={`${
                             productType.isNewProductApproval == true
-                              ? "text-green-500"
-                              : "text-red-500"
+                              ? "text-green-600"
+                              : "text-red-600"
                           }`}
                         >
                           {" "}
                           {productType.isNewProductApproval == true
-                            ? "Approved"
-                            : "Rejected"}
+                            ? "Yes"
+                            : "No"}
                         </span>
                       </div>
                     </div>
