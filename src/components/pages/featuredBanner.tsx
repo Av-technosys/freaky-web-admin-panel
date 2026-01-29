@@ -121,7 +121,10 @@ const FeaturedBanner = () => {
                   <CardFooter className="p-2">
                     <div className="w-full h-[10vh]  flex items-end justify-between">
                       <Button
-                        disabled={banner.priority === 1}
+                        disabled={
+                          banner.priority === 1 ||
+                          updatePriorityMutation.isPending
+                        }
                         onClick={() =>
                           priorityDecreaseHandler({
                             currentBanner: banner.id,
@@ -139,7 +142,10 @@ const FeaturedBanner = () => {
                       </Button>
                       <div className="mb-1">{index + 1}</div>
                       <Button
-                        disabled={featuredBanner.count == index + 1}
+                        disabled={
+                          featuredBanner.count == index + 1 ||
+                          updatePriorityMutation.isPending
+                        }
                         onClick={() =>
                           priorityIncreaseHandler({
                             currentBanner: banner.id,

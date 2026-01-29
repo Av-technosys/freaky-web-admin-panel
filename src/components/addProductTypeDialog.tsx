@@ -18,7 +18,7 @@ import { Checkbox } from "./ui/checkbox";
 
 const AddProductTypeDialog = ({ open, setOpen }: any) => {
   const [imageUrl, setImageUrl] = useState("");
-  const [adminApproval, setAdminApproval] = useState<boolean | null>(null);
+  const [adminApproval, setAdminApproval] = useState<boolean | null>(false);
 
   const queryClient = useQueryClient();
 
@@ -117,18 +117,9 @@ const AddProductTypeDialog = ({ open, setOpen }: any) => {
                     <Checkbox
                       id="yes"
                       checked={adminApproval === true}
-                      onCheckedChange={() => setAdminApproval(true)}
+                      onCheckedChange={() => setAdminApproval(!adminApproval)}
                     />
                     <Label htmlFor="yes">Yes</Label>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      id="no"
-                      checked={adminApproval === false}
-                      onCheckedChange={() => setAdminApproval(false)}
-                    />
-                    <Label htmlFor="no">No</Label>
                   </div>
                 </div>
               </div>

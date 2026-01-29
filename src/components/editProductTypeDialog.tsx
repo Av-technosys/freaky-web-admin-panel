@@ -143,17 +143,6 @@ const EditProductTypeDialog = ({ open, setOpen, productTypeDetails }: any) => {
                   />
                   <Label htmlFor="yes">Yes</Label>
                 </div>
-
-                <div className="flex items-center gap-2">
-                  <Checkbox
-                    id="no"
-                    checked={details?.isNewProductApproval === false}
-                    onCheckedChange={(checked) =>
-                      UpdateHandler(checked === false, "isNewProductApproval")
-                    }
-                  />
-                  <Label htmlFor="no">No</Label>
-                </div>
               </div>
             </div>
             <div className="flex flex-col gap-2">
