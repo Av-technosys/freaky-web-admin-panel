@@ -3,11 +3,13 @@ import {
   Calendar,
   ChevronDown,
   CupSoda,
+  DollarSign,
+  Gem,
   Home,
   Image,
-  IndianRupee,
   MessageCircleQuestionMark,
   Star,
+  UserRoundPen,
   Users,
 } from "lucide-react";
 import {
@@ -52,6 +54,11 @@ const items: SidebarItem[] = [
     icon: Home,
   },
   {
+    title: "Profile",
+    url: "/profile",
+    icon: UserRoundPen,
+  },
+  {
     title: "Users",
     url: "/users",
     icon: Users,
@@ -90,9 +97,14 @@ const items: SidebarItem[] = [
     icon: Image,
   },
   {
+    title: "Pricing Settings",
+    url: "/pricing_settings",
+    icon: Gem,
+  },
+  {
     title: "Payments",
     url: "/payments",
-    icon: IndianRupee,
+    icon: DollarSign,
   },
   {
     title: "Contact Us",

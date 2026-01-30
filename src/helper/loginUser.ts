@@ -5,9 +5,33 @@ export const loginUser = async (userData: any) => {
   try {
     const response = await axiosInstance.post(
       apiConstant.authentication.login,
-      userData
+      userData,
     );
     return response.data;
+  } catch (error) {
+    console.error("Error while sending request:", error);
+  }
+};
+
+export const forgetPasswordUsingEmail = async (userData: any) => {
+  try {
+    await axiosInstance.post(
+      apiConstant.authentication.forgetPasswordUsingEmail,
+      userData,
+    );
+    return userData.username;
+  } catch (error) {
+    console.error("Error while sending request:", error);
+  }
+};
+
+export const forgetPasswordUsingOTP = async (userData: any) => {
+  try {
+    await axiosInstance.post(
+      apiConstant.authentication.forgetPasswordUsingOTP,
+      userData,
+    );
+    return userData.username;
   } catch (error) {
     console.error("Error while sending request:", error);
   }
