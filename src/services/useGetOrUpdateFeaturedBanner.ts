@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   createFeaturedBannerHandler,
+  deleteFeaturedBannerHandler,
   getAllFeaturedBanners,
   updateBannerPriorityHandler,
 } from "../helper/featuredBannerHandler";
@@ -33,6 +34,18 @@ export const useUpdateFeaturedBanner = () => {
     },
     onError: () => {
       toast.error("Unable to update banner priority");
+    },
+  });
+};
+
+export const useDeleteFeaturedBanner = () => {
+  return useMutation({
+    mutationFn: deleteFeaturedBannerHandler,
+    onSuccess: () => {
+      toast.success("Banner Deleted Successfully.");
+    },
+    onError: () => {
+      toast.error("Unable to delete banner ");
     },
   });
 };
