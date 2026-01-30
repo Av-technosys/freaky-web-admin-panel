@@ -8,6 +8,7 @@ export const apiConstant = {
     getAllVendors: "/v1/admin/vendors",
     getVendorInfo: "/v1/admin/vendor_details",
     updateVendorStatus: "/v1/admin/update_status",
+    getAllServices: "/v1/vendor/product/meta",
   },
   user: {
     getAllUsers: "/v1/admin/users",
@@ -37,5 +38,17 @@ export const apiConstant = {
     getAllFeaturedBanners: "/v1/admin/banner",
     updateFeaturedBanner: "/v1/admin/banner",
     createFeaturedBanner: "/v1/admin/banner",
+    deleteFeaturedBanner: "/v1/admin/banner",
+  },
+  featuredCategory: {
+    getAllFeaturedCategory: "/v1/admin/category",
+    updateFeaturedCategory: "/v1/admin/category",
+    createFeaturedCategory: "/v1/admin/category",
+    deleteFeaturedCategory: "/v1/admin/category",
+  },
+  featuredProduct: {
+    getAllFeaturedProducts: "/v1/admin/featured_products",
+    updateFeaturedProduct: "/v1/admin/featured_product",
+    createFeaturedProduct: "/v1/admin/featured_product",
   },
 };

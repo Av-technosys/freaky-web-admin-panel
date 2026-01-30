@@ -1,10 +1,10 @@
-import { axiosInstance } from "./api";
+import axiosInstance from "./api";
 import { apiConstant } from "./apiConstant";
 
-export const getAllFeaturedBanners = async () => {
+export const getAllFeaturedCategories = async () => {
   try {
     const response = await axiosInstance.get(
-      `${apiConstant.featuredBanner.getAllFeaturedBanners}`,
+      `${apiConstant.featuredCategory.getAllFeaturedCategory}`,
     );
     return response.data;
   } catch (error) {
@@ -13,11 +13,11 @@ export const getAllFeaturedBanners = async () => {
   }
 };
 
-export const createFeaturedBannerHandler = async (bannerDetails: any) => {
+export const createFeaturedCategoryHandler = async (categoryData: any) => {
   try {
     const response = await axiosInstance.post(
-      `${apiConstant.featuredBanner.createFeaturedBanner}`,
-      bannerDetails,
+      `${apiConstant.featuredCategory.createFeaturedCategory}`,
+      categoryData,
     );
     return response.data;
   } catch (error) {
@@ -26,18 +26,14 @@ export const createFeaturedBannerHandler = async (bannerDetails: any) => {
   }
 };
 
-export const updateBannerPriorityHandler = async ({
-  currentBanner,
-  currentBannerPriority,
-  nextBannerPriority,
+export const updateFeaturedCategoryHandler = async ({
+  categoryData,
+  categoryId,
 }: any) => {
   try {
     const response = await axiosInstance.put(
-      `${apiConstant.featuredBanner.updateFeaturedBanner}/${currentBanner}`,
-      {
-        currentBannerPriority: currentBannerPriority,
-        nextBannerPriority: nextBannerPriority,
-      },
+      `${apiConstant.featuredCategory.updateFeaturedCategory}/${categoryId}`,
+      categoryData,
     );
     return response.data;
   } catch (error) {
@@ -46,13 +42,10 @@ export const updateBannerPriorityHandler = async ({
   }
 };
 
-export const deleteFeaturedBannerHandler = async ({ id, priority }: any) => {
+export const deleteFeaturedCategoryHandler = async (categoryId: any) => {
   try {
     const response = await axiosInstance.delete(
-      `${apiConstant.featuredBanner.deleteFeaturedBanner}/${id}`,
-      {
-        data: { priority },
-      },
+      `${apiConstant.featuredCategory.deleteFeaturedCategory}/${categoryId}`,
     );
     return response.data;
   } catch (error) {

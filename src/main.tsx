@@ -19,6 +19,8 @@ import Reviews from "./components/pages/reviews.tsx";
 import ProductTypes from "./components/pages/productTypes.tsx";
 import FeaturedBanner from "./components/pages/featuredBanner.tsx";
 import VendorRejected from "./components/pages/vendorRejected.tsx";
+import FeaturedCategory from "./components/pages/featuredCategory.tsx";
+import FeaturedProduct from "./components/pages/featuredProduct.tsx";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +67,14 @@ const routes = createBrowserRouter([
           {
             path: "/featured_banner",
             element: <FeaturedBanner />,
+          },
+          {
+            path: "/featured_category",
+            element: <FeaturedCategory />,
+          },
+          {
+            path: "/featured_product",
+            element: <FeaturedProduct />,
           },
           {
             path: "/product-types",

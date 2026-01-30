@@ -81,8 +81,12 @@ const items: SidebarItem[] = [
     icon: Star,
   },
   {
-    title: "Featured Banner",
-    url: "/featured_banner",
+    title: "Featured",
+    children: [
+      { title: "Banner", url: "/featured_banner" },
+      { title: "Category", url: "/featured_category" },
+      { title: "Products", url: "/featured_product" },
+    ],
     icon: Image,
   },
   {

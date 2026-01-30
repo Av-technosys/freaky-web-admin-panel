@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardFooter } from "../ui/card";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Trash2 } from "lucide-react";
 import {
+  useDeleteFeaturedBanner,
   useGetFeaturedBanner,
   useUpdateFeaturedBanner,
 } from "../../services/useGetOrUpdateFeaturedBanner";
@@ -18,6 +19,8 @@ const FeaturedBanner = () => {
 
   const { data: featuredBanner, isPending } = useGetFeaturedBanner();
   const updatePriorityMutation = useUpdateFeaturedBanner();
+
+  const deleteBannerMutation = useDeleteFeaturedBanner();
 
   //   console.log("old data", bannerData);
 
@@ -77,6 +80,19 @@ const FeaturedBanner = () => {
     );
   };
 
+  const deleteBannerHandler = (id: any, priority: any) => {
+    deleteBannerMutation.mutate(
+      { id, priority },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ["featured_banner"],
+          });
+        },
+      },
+    );
+  };
+
   return (
     <>
       {
@@ -108,14 +124,25 @@ const FeaturedBanner = () => {
               <Card key={index}>
                 <CardContent className="mt-7">
                   <CardDescription>
-                    <div className="h-[30vh] w-full rounded-xl overflow-hidden border bg-gray-100">
+                    <div className="h-[30vh] relative group w-full rounded-xl overflow-hidden border bg-gray-100">
                       <img
                         src={`${import.meta.env.VITE_IMAGE_BASE_URL}/${
                           banner.mediaURL
                         }`}
                         alt={"image"}
-                        className="h-full w-full object-cover"
+                        className="h-full w-full opacity-100 group-hover:opacity-65 transition object-cover"
                       />
+                      <Button
+                        size="sm"
+                        disabled={deleteBannerMutation.isPending}
+                        onClick={() => {
+                          deleteBannerHandler(banner.id, banner.priority);
+                        }}
+                        variant="destructive"
+                        className="absolute hidden top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer  group-hover:flex rounded-lg"
+                      >
+                        <Trash2 size={14} />
+                      </Button>
                     </div>
                   </CardDescription>
                   <CardFooter className="p-2">
