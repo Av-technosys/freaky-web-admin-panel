@@ -74,6 +74,13 @@ const Reviews = () => {
         className="w-full h-[95vh] overflow-y-auto mt-3  grid grid-cols-3 gap-2"
       >
         {isPending && <div>Loading...</div>}
+        {!isPending && reviews?.pages?.length === 0 && (
+          <div>
+            <div className="text-center text-[#89868D] py-6">
+              No review found..
+            </div>
+          </div>
+        )}
         {reviews?.pages?.map((page: any) => {
           return page?.data?.map((review: any, index: number) => {
             return (

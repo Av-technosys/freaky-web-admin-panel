@@ -15,6 +15,7 @@ import { Button } from "./ui/button";
 
 import { useQueryClient } from "@tanstack/react-query";
 import { useUpdateProductType } from "../services/useUpdateOrCreateProductType";
+import { Checkbox } from "./ui/checkbox";
 
 const EditProductTypeDialog = ({ open, setOpen, productTypeDetails }: any) => {
   const [details, setDetails] = useState(productTypeDetails);
@@ -35,6 +36,9 @@ const EditProductTypeDialog = ({ open, setOpen, productTypeDetails }: any) => {
     const updated = { ...details };
     if (name == "name") {
       updated.name = value;
+      setDetails(updated);
+    } else if (name == "isNewProductApproval") {
+      updated.isNewProductApproval = value;
       setDetails(updated);
     } else {
       updated.description = value;
@@ -73,6 +77,7 @@ const EditProductTypeDialog = ({ open, setOpen, productTypeDetails }: any) => {
       name: details.name,
       description: details.description,
       mediaURL: details.mediaURL,
+      adminApproval: details.isNewProductApproval,
     };
     updateProductTypeMutation.mutate(
       { data, productTypeId },
@@ -83,7 +88,7 @@ const EditProductTypeDialog = ({ open, setOpen, productTypeDetails }: any) => {
             queryKey: ["product_type"],
           });
         },
-      }
+      },
     );
   };
 
@@ -92,7 +97,7 @@ const EditProductTypeDialog = ({ open, setOpen, productTypeDetails }: any) => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit Event Type</DialogTitle>
+            <DialogTitle>Edit Product Type</DialogTitle>
           </DialogHeader>
 
           <DialogDescription className="flex flex-col gap-5">
@@ -101,6 +106,7 @@ const EditProductTypeDialog = ({ open, setOpen, productTypeDetails }: any) => {
               <Input
                 onChange={(e) => UpdateHandler(e.target.value, "name")}
                 name="name"
+                className="text-black"
                 value={details?.name}
               />
             </div>
@@ -119,14 +125,32 @@ const EditProductTypeDialog = ({ open, setOpen, productTypeDetails }: any) => {
                 name="image"
                 type="file"
                 accept="image/*"
+                className="text-black"
                 onChange={(e) => handleImageUpload(e)}
               />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label>New Product Approval</Label>
+
+              <div className="flex gap-6">
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    id="yes"
+                    checked={details?.isNewProductApproval === true}
+                    onCheckedChange={(checked) =>
+                      UpdateHandler(checked === true, "isNewProductApproval")
+                    }
+                  />
+                  <Label htmlFor="yes">Yes</Label>
+                </div>
+              </div>
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="name-1">Description</Label>
               <Textarea
                 onChange={(e) => UpdateHandler(e.target.value, "description")}
                 name="description"
+                className="text-black"
                 value={details?.description}
               />
             </div>

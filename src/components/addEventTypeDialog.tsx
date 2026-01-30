@@ -84,7 +84,7 @@ const AddEventTypeDialog = ({ open, setOpen }: any) => {
             >
               <div className="flex flex-col gap-2">
                 <Label htmlFor="name-1">Name</Label>
-                <Input name="name" />
+                <Input className="text-black" name="name" />
               </div>
               <div className="flex flex-col gap-2">
                 <Label htmlFor="name-1">Image</Label>
@@ -101,12 +101,13 @@ const AddEventTypeDialog = ({ open, setOpen }: any) => {
                   name="image"
                   type="file"
                   accept="image/*"
+                  className="text-black"
                   onChange={(e) => handleImageUpload(e)}
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <Label htmlFor="name-1">Description</Label>
-                <Textarea name="description" />
+                <Textarea className="text-black" name="description" />
               </div>
             </form>
           </DialogDescription>

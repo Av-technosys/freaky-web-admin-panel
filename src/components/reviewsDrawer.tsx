@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Sheet, SheetContent } from "./ui/sheet";
-import { SidebarGroup, SidebarGroupLabel } from "./ui/sidebar";
+import { SidebarGroup } from "./ui/sidebar";
 import { ProfilePicture } from "./common/profilePicture";
 import { TiIconStarFilled } from "./icons";
 import { useGetReviewById } from "../services/useGetAndDeleteUserReviews";
@@ -23,16 +23,18 @@ export function ReviewsDrawer({ open, setOpen, reviewId }: reviewDrawerProps) {
       <SheetContent className=" duration-200!">
         <div className=" w-full h-full">
           <SidebarGroup>
-            <SidebarGroupLabel>Details</SidebarGroupLabel>
+            <div className="text-xl">Details</div>
           </SidebarGroup>
 
           {isPending ? (
             <div>Loading...</div>
+          ) : !isPending && reviewData === "" ? (
+            <div className="px-5 text-[#89868D]">No review details found..</div>
           ) : (
-            <div className="px-4 h-full w-full pb-5  overflow-y-auto">
-              <div className=" border my-4 rounded-xl shadow-xs p-2 w-full flex items-center gap-3 justify-between  ">
-                <div className="">
-                  <div className="h-12 w-12 rounded-full overflow-hidden">
+            <div className="  h-full w-full pb-5  overflow-y-auto">
+              <div className=" border my-4 rounded-xl shadow-xs  w-full flex items-center gap-3 justify-between  ">
+                <div className="p-2">
+                  <div className="h-12 w-12  rounded-full overflow-hidden">
                     <ProfilePicture
                       url={reviewData?.userImage}
                       name={reviewData?.userFirstName}
@@ -101,7 +103,7 @@ export function ReviewsDrawer({ open, setOpen, reviewId }: reviewDrawerProps) {
                                 />
                               </div>
                             );
-                          }
+                          },
                         )}
                       </div>
                     </div>

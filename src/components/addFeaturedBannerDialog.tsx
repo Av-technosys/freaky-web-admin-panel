@@ -9,23 +9,20 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Textarea } from "./ui/textarea";
 import { useGetImageUrl, useUploadImage } from "../services/useUploadImage";
 import { Button } from "./ui/button";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCreateProductType } from "../services/useUpdateOrCreateProductType";
-import { Checkbox } from "./ui/checkbox";
+import { useCreateFeaturedBanner } from "../services/useGetOrUpdateFeaturedBanner";
 
-const AddProductTypeDialog = ({ open, setOpen }: any) => {
+const AddFeaturedBannerDialog = ({ open, setOpen }: any) => {
   const [imageUrl, setImageUrl] = useState("");
-  const [adminApproval, setAdminApproval] = useState<boolean | null>(false);
 
   const queryClient = useQueryClient();
 
   const getImageUrlMutation = useGetImageUrl();
   const uploadImageMutation = useUploadImage();
 
-  const createProductTypeMutation = useCreateProductType();
+  const createFeaturedBannerMutation = useCreateFeaturedBanner();
 
   const handleImageUpload = async (e: any) => {
     const file = e.target.files?.[0];
@@ -34,7 +31,7 @@ const AddProductTypeDialog = ({ open, setOpen }: any) => {
     const imageData = {
       fileName: file.name,
       fileType: file.type,
-      path: "productType",
+      path: "featuredBanner",
     };
 
     const uploadRes = await getImageUrlMutation.mutateAsync({
@@ -52,20 +49,18 @@ const AddProductTypeDialog = ({ open, setOpen }: any) => {
 
   const saveHandler = (e: any) => {
     e.preventDefault();
-    const productTypeDetails = {
+    const bannerDetails = {
       name: e.target.name.value,
-      description: e.target.description.value,
       mediaURL: imageUrl,
-      altText: "product type image",
-      adminApproval: adminApproval,
+      altText: "banner image",
     };
 
-    createProductTypeMutation.mutate(productTypeDetails, {
+    createFeaturedBannerMutation.mutate(bannerDetails, {
       onSuccess: () => {
         setOpen(false);
         setImageUrl("");
         queryClient.invalidateQueries({
-          queryKey: ["product_type"],
+          queryKey: ["featured_banner"],
         });
       },
     });
@@ -76,19 +71,23 @@ const AddProductTypeDialog = ({ open, setOpen }: any) => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add Product Type</DialogTitle>
+            <DialogTitle>Add Featured Banner</DialogTitle>
           </DialogHeader>
 
           <DialogDescription>
             <form
-              id="add-event-type-form"
+              id="add-banner-form"
               action=""
               className="flex flex-col gap-5 "
               onSubmit={(e) => saveHandler(e)}
             >
               <div className="flex flex-col gap-2">
                 <Label htmlFor="name-1">Name</Label>
-                <Input name="name" className="text-black" />
+                <Input
+                  name="name"
+                  placeholder="Enter Banner Name"
+                  className="text-black"
+                />
               </div>
               <div className="flex flex-col gap-2">
                 <Label htmlFor="name-1">Image</Label>
@@ -109,24 +108,6 @@ const AddProductTypeDialog = ({ open, setOpen }: any) => {
                   onChange={(e) => handleImageUpload(e)}
                 />
               </div>
-              <div className="flex flex-col gap-2">
-                <Label>New Product Approval</Label>
-
-                <div className="flex gap-6">
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      id="yes"
-                      checked={adminApproval === true}
-                      onCheckedChange={() => setAdminApproval(!adminApproval)}
-                    />
-                    <Label htmlFor="yes">Yes</Label>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="name-1">Description</Label>
-                <Textarea className="text-black" name="description" />
-              </div>
             </form>
           </DialogDescription>
 
@@ -142,7 +123,7 @@ const AddProductTypeDialog = ({ open, setOpen }: any) => {
 
             <Button
               type="submit"
-              form="add-event-type-form"
+              form="add-banner-form"
               size="sm"
               variant="destructive"
               className="rounded-lg"
@@ -156,4 +137,4 @@ const AddProductTypeDialog = ({ open, setOpen }: any) => {
   );
 };
 
-export default AddProductTypeDialog;
+export default AddFeaturedBannerDialog;

@@ -81,7 +81,7 @@ const EditEventTypeDialog = ({ open, setOpen, eventTypeDetails }: any) => {
             queryKey: ["event_types"],
           });
         },
-      }
+      },
     );
   };
 
@@ -99,6 +99,7 @@ const EditEventTypeDialog = ({ open, setOpen, eventTypeDetails }: any) => {
               <Input
                 onChange={(e) => UpdateHandler(e.target.value, "name")}
                 name="name"
+                className="text-black"
                 value={details?.name}
               />
             </div>
@@ -117,6 +118,7 @@ const EditEventTypeDialog = ({ open, setOpen, eventTypeDetails }: any) => {
                 name="image"
                 type="file"
                 accept="image/*"
+                className="text-black"
                 onChange={(e) => handleImageUpload(e)}
               />
             </div>
@@ -125,6 +127,7 @@ const EditEventTypeDialog = ({ open, setOpen, eventTypeDetails }: any) => {
               <Textarea
                 onChange={(e) => UpdateHandler(e.target.value, "description")}
                 name="description"
+                className="text-black"
                 value={details?.description}
               />
             </div>

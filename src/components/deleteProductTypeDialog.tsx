@@ -1,4 +1,4 @@
-import { useQueryClient } from "@tanstack/react-query";
+// import { useQueryClient } from "@tanstack/react-query";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,21 +9,26 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "./ui/alert-dialog";
-import { useDeleteProductType } from "../services/useUpdateOrCreateProductType";
+// import { useDeleteProductType } from "../services/useUpdateOrCreateProductType";
 
 export function DeleteProductTypeDialog({ open, setOpen, productTypeId }: any) {
-  const deleteProductTypeMutation = useDeleteProductType();
-  const queryClient = useQueryClient();
+  // const deleteProductTypeMutation = useDeleteProductType();
+  // const queryClient = useQueryClient();
+  console.log(productTypeId);
 
   const deleteHandler = () => {
-    deleteProductTypeMutation.mutate(productTypeId, {
-      onSuccess: () => {
-        setOpen(false);
-        queryClient.invalidateQueries({
-          queryKey: ["product_type"],
-        });
-      },
-    });
+    // deleteProductTypeMutation.mutate(productTypeId, {
+    //   onSuccess: () => {
+    //     setOpen(false);
+    //     queryClient.invalidateQueries({
+    //       queryKey: ["product_type"],
+    //     });
+    //   },
+    // });
+
+    alert(
+      "this part is commented because if we delete product type then the normal product associated with product type id shows error..",
+    );
   };
 
   return (

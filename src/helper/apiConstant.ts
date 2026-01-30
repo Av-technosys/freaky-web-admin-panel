@@ -36,5 +36,6 @@ export const apiConstant = {
   featuredBanner: {
     getAllFeaturedBanners: "/v1/admin/banner",
     updateFeaturedBanner: "/v1/admin/banner",
+    createFeaturedBanner: "/v1/admin/banner",
   },
 };

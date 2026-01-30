@@ -6,10 +6,15 @@ import {
 } from "../../services/useGetOrUpdateFeaturedBanner";
 import { Button } from "../ui/button";
 import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import AddFeaturedBannerDialog from "../addFeaturedBannerDialog";
 
 const FeaturedBanner = () => {
   //   const [bannerData, setBannerData] = useState<any>([]);
   const queryClient = useQueryClient();
+
+  const [openAddFeaturedBannerDialog, setOpenAddFeaturedBannerDialog] =
+    useState(false);
 
   const { data: featuredBanner, isPending } = useGetFeaturedBanner();
   const updatePriorityMutation = useUpdateFeaturedBanner();
@@ -42,7 +47,7 @@ const FeaturedBanner = () => {
             queryKey: ["featured_banner"],
           });
         },
-      }
+      },
     );
   };
 
@@ -68,14 +73,35 @@ const FeaturedBanner = () => {
             queryKey: ["featured_banner"],
           });
         },
-      }
+      },
     );
   };
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-2 my-2">
+      {
+        <AddFeaturedBannerDialog
+          open={openAddFeaturedBannerDialog}
+          setOpen={setOpenAddFeaturedBannerDialog}
+        />
+      }
+      <div className="flex items-center justify-end px-2 my-2 ">
+        <Button
+          onClick={() => setOpenAddFeaturedBannerDialog(true)}
+          size="sm"
+          variant="destructive"
+          className="rounded-lg"
+        >
+          Add Featured Banner
+        </Button>
+      </div>
+      <div className="grid grid-cols-3 pr-2 gap-2 my-2">
         {isPending && "Loading..."}
+        {!isPending && featuredBanner?.data?.length === 0 && (
+          <div>
+            <div className="text-[#89868D] ">No featured banner found..</div>
+          </div>
+        )}
         {featuredBanner?.data?.map((banner: any, index: number) => {
           return (
             <div className="col-span-1">
@@ -95,7 +121,10 @@ const FeaturedBanner = () => {
                   <CardFooter className="p-2">
                     <div className="w-full h-[10vh]  flex items-end justify-between">
                       <Button
-                        disabled={banner.priority === 1}
+                        disabled={
+                          banner.priority === 1 ||
+                          updatePriorityMutation.isPending
+                        }
                         onClick={() =>
                           priorityDecreaseHandler({
                             currentBanner: banner.id,
@@ -113,7 +142,10 @@ const FeaturedBanner = () => {
                       </Button>
                       <div className="mb-1">{index + 1}</div>
                       <Button
-                        disabled={featuredBanner.count == index + 1}
+                        disabled={
+                          featuredBanner.count == index + 1 ||
+                          updatePriorityMutation.isPending
+                        }
                         onClick={() =>
                           priorityIncreaseHandler({
                             currentBanner: banner.id,
