@@ -1,5 +1,6 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Trash2 } from "lucide-react";
 import {
+  useDeleteFeaturedProduct,
   useGetFeaturedProducts,
   useUpdateFeaturedProduct,
 } from "../../services/useGetOrUpdateFeaturedProduct";
@@ -24,6 +25,8 @@ const FeaturedProduct = () => {
     useState(false);
 
   const updatePriorityMutation = useUpdateFeaturedProduct();
+
+  const deleteProductMutation = useDeleteFeaturedProduct();
 
   const priorityIncreaseHandler = ({
     currentProduct,
@@ -75,6 +78,19 @@ const FeaturedProduct = () => {
     setOpenFeaturedProductDialog(true);
   };
 
+  const deleteProductHandler = (id: any, priority: any, categoryId: any) => {
+    deleteProductMutation.mutate(
+      { id, priority, categoryId },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ["featured_products"],
+          });
+        },
+      },
+    );
+  };
+
   return (
     <>
       {
@@ -120,14 +136,29 @@ const FeaturedProduct = () => {
                         <Card key={index}>
                           <CardContent className="mt-7">
                             <CardDescription>
-                              <div className="h-[30vh]  w-full rounded-xl overflow-hidden border bg-gray-100">
+                              <div className="h-[30vh] group relative  w-full rounded-xl overflow-hidden border bg-gray-100">
                                 <img
                                   src={`${import.meta.env.VITE_IMAGE_BASE_URL}/${
                                     item.image
                                   }`}
                                   alt={"image"}
-                                  className="h-full w-full  object-cover"
+                                  className="h-full w-full opacity-100 group-hover:opacity-65 transition  object-cover"
                                 />
+                                <Button
+                                  size="sm"
+                                  disabled={deleteProductMutation.isPending}
+                                  onClick={() => {
+                                    deleteProductHandler(
+                                      item.id,
+                                      item.priority,
+                                      product.categoryId,
+                                    );
+                                  }}
+                                  variant="destructive"
+                                  className="absolute hidden top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10 group-hover:flex rounded-lg"
+                                >
+                                  <Trash2 size={14} />
+                                </Button>
                               </div>
                             </CardDescription>
                             <CardFooter className="p-2">

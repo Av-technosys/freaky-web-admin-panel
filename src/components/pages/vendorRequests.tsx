@@ -69,7 +69,7 @@ const VendorRequests = () => {
 
   const approveHandler = (vendorId: any) => {
     vendorPermissionMutation.mutate(
-      { vendorId, status: "approved" },
+      { vendorId, status: "APPROVED" },
       {
         onSuccess: () => {
           queryClient.invalidateQueries({
@@ -82,7 +82,7 @@ const VendorRequests = () => {
 
   const rejectHandler = (vendorId: any) => {
     vendorPermissionMutation.mutate(
-      { vendorId, status: "rejected" },
+      { vendorId, status: "REJECTED" },
       {
         onSuccess: () => {
           queryClient.invalidateQueries({
@@ -172,9 +172,9 @@ const VendorRequests = () => {
                   </TableCell>
                   <TableCell
                     className={` ${
-                      vendor.status == "approved"
+                      vendor.status == "APPROVED"
                         ? "text-green-500"
-                        : vendor.status == "rejected"
+                        : vendor.status == "REJECTED"
                           ? "text-red-500"
                           : "text-[#89868D]"
                     }`}

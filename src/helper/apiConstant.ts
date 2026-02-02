@@ -54,6 +54,7 @@ export const apiConstant = {
     getAllFeaturedProducts: "/v1/admin/featured_products",
     updateFeaturedProduct: "/v1/admin/featured_product",
     createFeaturedProduct: "/v1/admin/featured_product",
+    deleteFeaturedProduct: "/v1/admin/featured_product",
   },
   pricingSetting: {
     getPricingSetting: "/v1/admin/pricing_setting",

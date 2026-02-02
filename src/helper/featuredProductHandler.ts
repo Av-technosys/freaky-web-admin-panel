@@ -60,3 +60,22 @@ export const createFeaturedProductHandler = async (productData: any) => {
     throw error;
   }
 };
+
+export const deleteFeaturedProductHandler = async ({
+  id,
+  priority,
+  categoryId,
+}: any) => {
+  try {
+    const response = await axiosInstance.delete(
+      `${apiConstant.featuredProduct.deleteFeaturedProduct}/${id}`,
+      {
+        data: { priority, categoryId },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error while sending request:", error);
+    throw error;
+  }
+};
