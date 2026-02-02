@@ -123,12 +123,13 @@ const AddFeaturedBannerDialog = ({ open, setOpen }: any) => {
 
             <Button
               type="submit"
+              disabled={createFeaturedBannerMutation.isPending}
               form="add-banner-form"
               size="sm"
               variant="destructive"
               className="rounded-lg"
             >
-              Save
+              {createFeaturedBannerMutation.isPending ? "Saving..." : "Save"}
             </Button>
           </DialogFooter>
         </DialogContent>

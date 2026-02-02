@@ -60,84 +60,86 @@ const PricingSetting = () => {
           Add Pricing Setting
         </Button>
       </div>
-      <div className="w-full  pr-2">
-        <Table className="border w-full">
-          <TableHeader>
-            <TableRow className="bg-gray-50">
-              <TableHead>Pricing Name</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Fee Percentage</TableHead>
-              <TableHead>Created At</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
+      <div className=" space-y-3 pr-2">
+        <div className="p-2 border w-full rounded-lg ">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Pricing Name</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead>Fee Percentage</TableHead>
+                <TableHead>Created At</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
 
-          <TableBody>
-            {isPending && "Loading..."}
-            {!isPending && pricingSettings?.data?.length === 0 && (
-              <div>
-                <div className="text-[#89868D] ">
-                  No Pricing setting found..
+            <TableBody>
+              {isPending && "Loading..."}
+              {!isPending && pricingSettings?.data?.length === 0 && (
+                <div>
+                  <div className="text-[#89868D] ">
+                    No Pricing setting found..
+                  </div>
                 </div>
-              </div>
-            )}
-            {pricingSettings?.data?.map((pricing: any) => {
-              const firstLetter = pricing.name.charAt(0).toUpperCase();
+              )}
+              {pricingSettings?.data?.map((pricing: any) => {
+                const firstLetter = pricing.name.charAt(0).toUpperCase();
 
-              return (
-                <TableRow key={pricing.id} className="hover:bg-gray-50">
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center font-semibold text-red-600">
-                        {firstLetter}
-                      </div>
+                return (
+                  <TableRow key={pricing.id} className="hover:bg-gray-50">
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center font-semibold text-red-600">
+                          {firstLetter}
+                        </div>
 
-                      <div>
-                        <div className="font-medium text-gray-900">
-                          {pricing.name}
+                        <div>
+                          <div className="font-medium text-gray-900">
+                            {pricing.name}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </TableCell>
+                    </TableCell>
 
-                  <TableCell className="w-[300px]">
-                    <div className="max-h-20 overflow-y-auto text-sm text-gray-600">
-                      {pricing.description}
-                    </div>
-                  </TableCell>
+                    <TableCell className="w-[300px]">
+                      <div className="max-h-20 overflow-y-auto text-sm text-gray-600">
+                        {pricing.description}
+                      </div>
+                    </TableCell>
 
-                  <TableCell className="text-sm text-gray-500">
-                    {pricing.feePercentage}%
-                  </TableCell>
+                    <TableCell className="text-sm text-gray-500">
+                      {pricing.feePercentage}%
+                    </TableCell>
 
-                  <TableCell className="text-sm text-gray-500">
-                    {new Date(pricing.createdAt).toLocaleDateString()}
-                  </TableCell>
+                    <TableCell className="text-sm text-gray-500">
+                      {new Date(pricing.createdAt).toLocaleDateString()}
+                    </TableCell>
 
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-4">
-                      <Button
-                        size="icon"
-                        variant="outline"
-                        onClick={() => editHandler(pricing)}
-                      >
-                        <Pencil size={16} />
-                      </Button>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-4">
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          onClick={() => editHandler(pricing)}
+                        >
+                          <Pencil size={16} />
+                        </Button>
 
-                      <Button
-                        size="icon"
-                        variant="destructive"
-                        onClick={() => deleteHandler(pricing.id)}
-                      >
-                        <Trash2 size={16} />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+                        <Button
+                          size="icon"
+                          variant="destructive"
+                          onClick={() => deleteHandler(pricing.id)}
+                        >
+                          <Trash2 size={16} />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </>
   );

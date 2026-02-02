@@ -94,8 +94,8 @@ const Users = () => {
         </InputGroup>
       </div>
 
-      <div className=" space-y-3">
-        <div className="max-w-[400px] bg-white overflow-x-scroll lg:overflow-hidden md:max-w-full p-3  border">
+      <div className=" space-y-3 pr-2">
+        <div className="max-w-[400px] rounded-md  bg-white overflow-x-scroll lg:overflow-hidden md:max-w-full p-3  border">
           <Table>
             <TableHeader className="text-[#89868D]  ">
               <TableRow>
@@ -124,7 +124,7 @@ const Users = () => {
                 const rowNumber = (page - 1) * pageSize + (index + 1);
 
                 return (
-                  <TableRow key={user.userId} className=" ">
+                  <TableRow key={user.userId} className="hover:bg-gray-50">
                     <TableCell className="text-[#89868D]">
                       {rowNumber}
                     </TableCell>

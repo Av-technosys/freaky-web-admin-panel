@@ -22,7 +22,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "./ui/sidebar";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   Collapsible,
   CollapsibleContent,
@@ -32,6 +32,8 @@ import { Button } from "./ui/button";
 import { TiIconLogout } from "./icons";
 import { toast } from "sonner";
 import { tokenStorage } from "../helper/refreshToken";
+import { useState } from "react";
+import { Separator } from "./ui/separator";
 
 type SidebarItem =
   | {
@@ -53,11 +55,11 @@ const items: SidebarItem[] = [
     url: "/",
     icon: Home,
   },
-  {
-    title: "Profile",
-    url: "/profile",
-    icon: UserRoundPen,
-  },
+  // {
+  //   title: "Profile",
+  //   url: "/profile",
+  //   icon: UserRoundPen,
+  // },
   {
     title: "Users",
     url: "/users",
@@ -113,9 +115,19 @@ const items: SidebarItem[] = [
   },
 ];
 
+const item = [
+  {
+    title: "Profile",
+    url: "/profile",
+    icon: UserRoundPen,
+  },
+];
+
 export function AdminSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [openItem, setOpenItem] = useState<string | null>(null);
 
   const logoutHandler = () => {
     tokenStorage.clear();
@@ -124,9 +136,9 @@ export function AdminSidebar() {
   };
 
   return (
-    <Sidebar className="border-r border-gray-200">
-      <SidebarContent>
-        <SidebarGroup>
+    <Sidebar className="border-r border-gray-200 ">
+      <SidebarContent className="bg-gray-50 ">
+        <SidebarGroup className="h-full">
           <SidebarGroupLabel>Admin Panel</SidebarGroupLabel>
 
           <SidebarGroupContent>
@@ -134,7 +146,13 @@ export function AdminSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   {item.children ? (
-                    <Collapsible className="group">
+                    <Collapsible
+                      open={openItem === item.title}
+                      onOpenChange={(isOpen) =>
+                        setOpenItem(isOpen ? item.title : null)
+                      }
+                      className="group"
+                    >
                       <CollapsibleTrigger asChild>
                         <SidebarMenuButton>
                           <item.icon />
@@ -183,9 +201,37 @@ export function AdminSidebar() {
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
+          <Separator className=" my-1.5 mt-auto" />
+          <div className="">
+            <SidebarMenu>
+              {item.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    className={`  ${
+                      item.url === location.pathname && "text-orange-600"
+                    }`}
+                    asChild
+                  >
+                    <Link to={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+
+              <Button
+                onClick={logoutHandler}
+                className="w-full mb-1"
+                variant={"destructive"}
+              >
+                <TiIconLogout /> Logout
+              </Button>
+            </SidebarMenu>
+          </div>
         </SidebarGroup>
       </SidebarContent>
-      <div className="w-full px-2">
+      {/* <div className="w-full px-2">
         <Button
           onClick={logoutHandler}
           className="w-full mb-1"
@@ -193,7 +239,7 @@ export function AdminSidebar() {
         >
           <TiIconLogout /> Logout
         </Button>
-      </div>
+      </div> */}
     </Sidebar>
   );
 }

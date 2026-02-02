@@ -120,18 +120,17 @@ const FeaturedBanner = () => {
         )}
         {featuredBanner?.data?.map((banner: any, index: number) => {
           return (
-            <div className="col-span-1">
+            <div className="col-span-1 ">
               <Card key={index}>
                 <CardContent className="mt-7">
                   <CardDescription>
-                    <div className="h-[30vh] relative group w-full rounded-xl overflow-hidden border bg-gray-100">
+                    <div className="h-[30vh] relative group w-full rounded-xl overflow-hidden border bg-white">
                       <img
-                        src={`${import.meta.env.VITE_IMAGE_BASE_URL}/${
-                          banner.mediaURL
-                        }`}
-                        alt={"image"}
+                        src={`${import.meta.env.VITE_IMAGE_BASE_URL}/${banner.mediaURL}`}
+                        alt="image"
                         className="h-full w-full opacity-100 group-hover:opacity-65 transition object-cover"
                       />
+
                       <Button
                         size="sm"
                         disabled={deleteBannerMutation.isPending}
@@ -139,7 +138,8 @@ const FeaturedBanner = () => {
                           deleteBannerHandler(banner.id, banner.priority);
                         }}
                         variant="destructive"
-                        className="absolute hidden top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer  group-hover:flex rounded-lg"
+                        className=" absolute cursor-pointer top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition rounded-lg
+    "
                       >
                         <Trash2 size={14} />
                       </Button>

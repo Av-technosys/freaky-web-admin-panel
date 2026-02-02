@@ -133,7 +133,7 @@ const FeaturedProduct = () => {
                   {product?.products?.map((item: any, index: number) => {
                     return (
                       <div className="col-span-1">
-                        <Card key={index}>
+                        <Card key={index} className="shadow-none bg-gray-50">
                           <CardContent className="mt-7">
                             <CardDescription>
                               <div className="h-[30vh] group relative  w-full rounded-xl overflow-hidden border bg-gray-100">
