@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   createFeaturedProductHandler,
+  deleteFeaturedProductHandler,
   getAllFeaturedProducts,
   getVendorServices,
   updateProductPriorityHandler,
@@ -44,6 +45,18 @@ export const useCreateFeaturedProduct = () => {
     },
     onError: () => {
       toast.error("Unable to create featured product");
+    },
+  });
+};
+
+export const useDeleteFeaturedProduct = () => {
+  return useMutation({
+    mutationFn: deleteFeaturedProductHandler,
+    onSuccess: () => {
+      toast.success("Featured Product Deleted Successfully.");
+    },
+    onError: () => {
+      toast.error("Unable to delete product ");
     },
   });
 };

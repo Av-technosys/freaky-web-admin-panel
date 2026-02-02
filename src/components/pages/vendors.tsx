@@ -149,9 +149,9 @@ const Vendors = () => {
                     </TableCell>
                     <TableCell
                       className={` ${
-                        vendor.status == "approved"
+                        vendor.status == "APPROVED"
                           ? "text-green-500"
-                          : vendor.status == "rejected"
+                          : vendor.status == "REJECTED"
                             ? "text-red-500"
                             : "text-[#89868D]"
                       }`}

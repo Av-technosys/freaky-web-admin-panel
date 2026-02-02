@@ -3,6 +3,7 @@ import {
   IconBrandInstagram,
   IconBrandLinkedin,
   IconBrandYoutube,
+  IconCameraFilled,
   IconCaretDown,
   IconCheck,
   IconEye,
@@ -60,4 +61,7 @@ export function TiIconStarFilled(props: any) {
 }
 export function TiIconSearch(props: any) {
   return <IconSearch {...props} />;
+}
+export function TiIconCameraFilled(props: any) {
+  return <IconCameraFilled {...props} />;
 }

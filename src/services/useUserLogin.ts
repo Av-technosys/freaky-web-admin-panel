@@ -1,7 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { loginUser } from "../helper/loginUser";
+import {
+  forgetPasswordUsingEmail,
+  forgetPasswordUsingOTP,
+  loginUser,
+} from "../helper/loginUser";
 import { jwtDecode } from "jwt-decode";
 
 const decodeIdToken = (token: string): any => {
@@ -30,6 +34,30 @@ export const useUserLoginMutation = () => {
     },
     onError: () => {
       toast.error("Something went wrong");
+    },
+  });
+};
+
+export const useUserForgetPasswordMutation = () => {
+  return useMutation({
+    mutationFn: forgetPasswordUsingEmail,
+    onSuccess: () => {
+      toast.success(`OTP send to your email`);
+    },
+    onError: () => {
+      toast.error("Something went wrong!");
+    },
+  });
+};
+
+export const useUserForgetPasswordUsingOTPMutation = () => {
+  return useMutation({
+    mutationFn: forgetPasswordUsingOTP,
+    onSuccess: () => {
+      toast.success(`Password Forgot Successfully...`);
+    },
+    onError: () => {
+      toast.error("Something went wrong!");
     },
   });
 };

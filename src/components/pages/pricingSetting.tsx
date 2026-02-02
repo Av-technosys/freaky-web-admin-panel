@@ -1,9 +1,5 @@
 import { Pencil, Trash2 } from "lucide-react";
-import { useGetFeaturedCategories } from "../../services/useGetAndCreateAndUpdateFeaturedCategory";
 import { Button } from "../ui/button";
-import AddOrEditFeaturedCategoryDialog from "../addOrEditFeaturedCategoryDialog";
-import { useState } from "react";
-import DeleteCategoryDialog from "../deleteCategoryDialog";
 import {
   Table,
   TableBody,
@@ -12,59 +8,65 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import { useGetPricingSetting } from "../../services/useGetOrUpdateOrCreateOrDeletePricingSetting";
+import { useState } from "react";
+import AddOrEditPricingSettingDialog from "../addOrEditPricingSettingDialog";
+import DeletePricingSettingDialog from "../deletePricingSettingDialog";
 
-const FeaturedCategory = () => {
-  const [openCategoryDialog, setOpenCategoryDialog] = useState(false);
+const PricingSetting = () => {
+  const { data: pricingSettings, isPending } = useGetPricingSetting();
+  const [openPricingSettingDialog, setOpenPricingSettingDialog] =
+    useState(false);
+  const [pricingSettingDetails, setPricingSettingDetails] = useState("");
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const [categoryId, setCategoryId] = useState("");
-  const [categoryDetails, setCategoryDetails] = useState("");
-  const { data: featuredCategories, isPending } = useGetFeaturedCategories();
+  const [pricingSettingId, setPricingSettingId] = useState("");
 
   const editHandler = (details: any) => {
-    setOpenCategoryDialog(true);
-    setCategoryDetails(details);
+    setOpenPricingSettingDialog(true);
+    setPricingSettingDetails(details);
   };
 
   const deleteHandler = (id: any) => {
     setOpenDeleteDialog(true);
-    setCategoryId(id);
+    setPricingSettingId(id);
   };
 
   return (
     <>
       {
-        <AddOrEditFeaturedCategoryDialog
-          open={openCategoryDialog}
-          setOpen={setOpenCategoryDialog}
-          categoryDetails={categoryDetails}
+        <AddOrEditPricingSettingDialog
+          open={openPricingSettingDialog}
+          setOpen={setOpenPricingSettingDialog}
+          pricingDetails={pricingSettingDetails}
         />
       }
       {
-        <DeleteCategoryDialog
+        <DeletePricingSettingDialog
           open={openDeleteDialog}
           setOpen={setOpenDeleteDialog}
-          categoryId={categoryId}
+          pricingSettingId={pricingSettingId}
         />
       }
       <div className="flex items-center justify-end px-2 my-2 ">
         <Button
           onClick={() => {
-            setOpenCategoryDialog(true);
-            setCategoryDetails("");
+            setOpenPricingSettingDialog(true);
+            setPricingSettingDetails("");
           }}
           size="sm"
           variant="destructive"
           className="rounded-lg"
         >
-          Add Featured Category
+          Add Pricing Setting
         </Button>
       </div>
       <div className="w-full  pr-2">
         <Table className="border w-full">
           <TableHeader>
             <TableRow className="bg-gray-50">
-              <TableHead>Category Name</TableHead>
+              <TableHead>Pricing Name</TableHead>
               <TableHead>Description</TableHead>
+              <TableHead>Fee Percentage</TableHead>
               <TableHead>Created At</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -72,18 +74,18 @@ const FeaturedCategory = () => {
 
           <TableBody>
             {isPending && "Loading..."}
-            {!isPending && featuredCategories?.data?.length === 0 && (
+            {!isPending && pricingSettings?.data?.length === 0 && (
               <div>
                 <div className="text-[#89868D] ">
-                  No featured category found..
+                  No Pricing setting found..
                 </div>
               </div>
             )}
-            {featuredCategories?.data?.map((category: any) => {
-              const firstLetter = category.name.charAt(0).toUpperCase();
+            {pricingSettings?.data?.map((pricing: any) => {
+              const firstLetter = pricing.name.charAt(0).toUpperCase();
 
               return (
-                <TableRow key={category.id} className="hover:bg-gray-50">
+                <TableRow key={pricing.id} className="hover:bg-gray-50">
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <div className="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center font-semibold text-red-600">
@@ -92,20 +94,24 @@ const FeaturedCategory = () => {
 
                       <div>
                         <div className="font-medium text-gray-900">
-                          {category.name}
+                          {pricing.name}
                         </div>
                       </div>
                     </div>
                   </TableCell>
 
-                  <TableCell className="w-[350px]">
+                  <TableCell className="w-[300px]">
                     <div className="max-h-20 overflow-y-auto text-sm text-gray-600">
-                      {category.description}
+                      {pricing.description}
                     </div>
                   </TableCell>
 
                   <TableCell className="text-sm text-gray-500">
-                    {new Date(category.createdAt).toLocaleDateString()}
+                    {pricing.feePercentage}%
+                  </TableCell>
+
+                  <TableCell className="text-sm text-gray-500">
+                    {new Date(pricing.createdAt).toLocaleDateString()}
                   </TableCell>
 
                   <TableCell className="text-right">
@@ -113,7 +119,7 @@ const FeaturedCategory = () => {
                       <Button
                         size="icon"
                         variant="outline"
-                        onClick={() => editHandler(category)}
+                        onClick={() => editHandler(pricing)}
                       >
                         <Pencil size={16} />
                       </Button>
@@ -121,7 +127,7 @@ const FeaturedCategory = () => {
                       <Button
                         size="icon"
                         variant="destructive"
-                        onClick={() => deleteHandler(category.id)}
+                        onClick={() => deleteHandler(pricing.id)}
                       >
                         <Trash2 size={16} />
                       </Button>
@@ -137,4 +143,4 @@ const FeaturedCategory = () => {
   );
 };
 
-export default FeaturedCategory;
+export default PricingSetting;

@@ -21,6 +21,9 @@ import FeaturedBanner from "./components/pages/featuredBanner.tsx";
 import VendorRejected from "./components/pages/vendorRejected.tsx";
 import FeaturedCategory from "./components/pages/featuredCategory.tsx";
 import FeaturedProduct from "./components/pages/featuredProduct.tsx";
+import PricingSetting from "./components/pages/pricingSetting.tsx";
+import Profile from "./components/pages/profile.tsx";
+import ForgetPassword from "./components/pages/forgotPassword.tsx";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +38,10 @@ const routes = createBrowserRouter([
           {
             path: "/",
             element: <Home />,
+          },
+          {
+            path: "/profile",
+            element: <Profile />,
           },
           {
             path: "/payments",
@@ -61,6 +68,10 @@ const routes = createBrowserRouter([
             element: <Users />,
           },
           {
+            path: "forgot_password",
+            element: <ForgetPassword />,
+          },
+          {
             path: "/event-types",
             element: <EventTypes />,
           },
@@ -75,6 +86,10 @@ const routes = createBrowserRouter([
           {
             path: "/featured_product",
             element: <FeaturedProduct />,
+          },
+          {
+            path: "/pricing_settings",
+            element: <PricingSetting />,
           },
           {
             path: "/product-types",

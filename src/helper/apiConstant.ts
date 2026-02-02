@@ -1,6 +1,8 @@
 export const apiConstant = {
   authentication: {
     login: "v1/auth/signin",
+    forgetPasswordUsingEmail: "v1/auth/forgot-password",
+    forgetPasswordUsingOTP: "v1/auth/confirm-forgot-password",
   },
   vendor: {
     getAllRequestedVendors: "/v1/admin/requested_vendors",
@@ -13,6 +15,8 @@ export const apiConstant = {
   user: {
     getAllUsers: "/v1/admin/users",
     getUserInfo: "/v1/admin/user_details",
+    getUserDetails: "/v1/user/personal_details",
+    updateUserDetails: "/v1/user/update_details",
   },
   event: {
     getAllEventTypes: "/v1/admin/event_type",
@@ -50,5 +54,12 @@ export const apiConstant = {
     getAllFeaturedProducts: "/v1/admin/featured_products",
     updateFeaturedProduct: "/v1/admin/featured_product",
     createFeaturedProduct: "/v1/admin/featured_product",
+    deleteFeaturedProduct: "/v1/admin/featured_product",
+  },
+  pricingSetting: {
+    getPricingSetting: "/v1/admin/pricing_setting",
+    updatePricingSetting: "/v1/admin/pricing_setting",
+    createPricingSetting: "/v1/admin/pricing_setting",
+    deletePricingSetting: "/v1/admin/pricing_setting",
   },
 };
