@@ -1,5 +1,6 @@
 // import { useQueryClient } from "@tanstack/react-query";
 // import { useDeleteEventType } from "../services/useUpdateOrCreateEventType";
+import { toast } from "sonner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,9 +26,14 @@ export function DeleteEventTypeDialog({ open, setOpen, eventTypeId }: any) {
     //     });
     //   },
     // });
-
-    alert(
-      "this part is commented because if we delete event types then the normal event associated with event type id shows error..",
+    toast.error(
+      "When an event type is deleted, normal events linked to its eventTypeId break.",
+      {
+        style: {
+          color: "#991b1b",
+          border: "1px solid #ef4444",
+        },
+      },
     );
   };
 
