@@ -71,7 +71,7 @@ const Reviews = () => {
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="w-full h-[95vh] overflow-y-auto mt-3  grid grid-cols-3 gap-2"
+        className="w-full h-[95vh] overflow-y-auto mt-3  grid grid-cols-3 gap-2 pr-2"
       >
         {isPending && <div>Loading...</div>}
         {!isPending && reviews?.pages?.length === 0 && (
@@ -85,8 +85,8 @@ const Reviews = () => {
           return page?.data?.map((review: any, index: number) => {
             return (
               <>
-                <div key={index} className="col-span-1 ">
-                  <Card>
+                <div key={index} className="col-span-1 group ">
+                  <Card className="shadow-none group-hover:shadow bg-gray-50 ">
                     <CardHeader>
                       <CardTitle className="w-full flex items-center justify-between">
                         <div className="  flex items-center  gap-2">
@@ -126,14 +126,14 @@ const Reviews = () => {
                     <CardFooter className="w-full items-center justify-end gap-2 ">
                       <Button
                         onClick={() => drawerHandler(review?.id)}
-                        className="text-yellow-500 border-yellow-500 px-1 shadow-none"
+                        className="text-yellow-500 cursor-pointer border-yellow-500 px-1 shadow-none"
                         variant="link"
                       >
                         View More
                       </Button>
                       <Button
                         onClick={() => deleteHandler(review?.id)}
-                        className="text-red-500 border-red-500 px-1 shadow-none"
+                        className="text-red-500 cursor-pointer border-red-500 px-1 shadow-none"
                         variant="link"
                       >
                         Delete

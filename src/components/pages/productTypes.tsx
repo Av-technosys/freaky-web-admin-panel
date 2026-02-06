@@ -56,7 +56,7 @@ const ProductTypes = () => {
           Add Product Type
         </Button>
       </div>
-      <div className="grid grid-cols-3 gap-3 pr-2 mb-2">
+      <div className="grid grid-cols-3 gap-2 pr-2 mb-2">
         {isPending && <div>Loading...</div>}
         {!isPending && productTypes?.data?.length === 0 && (
           <div>
@@ -70,7 +70,7 @@ const ProductTypes = () => {
             <>
               <Card
                 key={index}
-                className="group rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-lg transition-all"
+                className="group rounded-2xl border border-gray-200 bg-gray-50 shadow-none hover:shadow transition-all"
               >
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-4">
@@ -122,27 +122,25 @@ const ProductTypes = () => {
 
                 <div className="mx-6 border-t" />
 
-                <CardContent className="pt-4 pb-5">
+                <CardContent className="h-16 break-all overflow-y-auto">
                   <p className="text-sm text-gray-600 leading-relaxed line-clamp-2">
                     {productType?.description}
                   </p>
                 </CardContent>
 
-                <CardFooter className="flex justify-end gap-2 pt-0">
+                <CardFooter className="flex justify-end gap-3 pt-0">
                   <Button
                     onClick={() => editHandler(productType)}
-                    size="sm"
-                    variant="outline"
-                    className="rounded-lg"
+                    className="text-yellow-500 cursor-pointer border-yellow-500 px-1 shadow-none"
+                    variant="link"
                   >
                     Edit
                   </Button>
 
                   <Button
                     onClick={() => deleteHandler(productType.id)}
-                    size="sm"
-                    variant="destructive"
-                    className="rounded-lg"
+                    className="text-red-500 cursor-pointer border-red-500 px-1 shadow-none"
+                    variant="link"
                   >
                     Delete
                   </Button>

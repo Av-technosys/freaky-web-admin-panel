@@ -1,4 +1,5 @@
 // import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,9 +26,14 @@ export function DeleteProductTypeDialog({ open, setOpen, productTypeId }: any) {
     //     });
     //   },
     // });
-
-    alert(
-      "this part is commented because if we delete product type then the normal product associated with product type id shows error..",
+    toast.error(
+      "When an product type is deleted, normal product linked to its productTypeId break.",
+      {
+        style: {
+          color: "#991b1b",
+          border: "1px solid #ef4444",
+        },
+      },
     );
   };
 
